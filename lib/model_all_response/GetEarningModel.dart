@@ -1,6 +1,6 @@
 /// error : false
 /// message : "User Monthly Earnings"
-/// data : [{"pos":"350049.17000000004","total_amount":"46587","month":"July","earning_percent":"2","earning_amount":"931.74"}]
+/// data : [{"user_id":"420","name":"Ajay","bank_name":"L&T TW WHEELER","pos":"251917.65","total_amount":"26253","total_leads":"9","bom_bkt":"1","earning_percent":"2","month":"August","earning_amount":"525.06"},{"user_id":"420","name":"Ajay","bank_name":"L&T TW WHEELER","pos":"29440.79","total_amount":"8535","total_leads":"3","bom_bkt":"2","earning_percent":"0","month":"August","earning_amount":"0.00"},{"user_id":"420","name":"Ajay","bank_name":"L&T TW WHEELER","pos":"9823.83","total_amount":"2576","total_leads":"1","bom_bkt":"3","earning_percent":"0","month":"August","earning_amount":"0.00"},{"user_id":"420","name":"Ajay","bank_name":"X SELL","pos":"1043067.0299999999","total_amount":"48185","total_leads":"10","bom_bkt":"X","earning_percent":"5","month":"August","earning_amount":"2,409.25"}]
 
 class GetEarningModel {
   GetEarningModel({
@@ -48,61 +48,106 @@ GetEarningModel copyWith({  bool? error,
 
 }
 
-/// pos : "350049.17000000004"
-/// total_amount : "46587"
-/// month : "July"
+/// user_id : "420"
+/// name : "Ajay"
+/// bank_name : "L&T TW WHEELER"
+/// pos : "251917.65"
+/// total_amount : "26253"
+/// total_leads : "9"
+/// bom_bkt : "1"
 /// earning_percent : "2"
-/// earning_amount : "931.74"
+/// month : "August"
+/// earning_amount : "525.06"
 
 class Data {
   Data({
+      String? userId, 
+      String? name, 
+      String? bankName, 
       String? pos, 
       String? totalAmount, 
-      String? month, 
+      String? totalLeads, 
+      String? bomBkt, 
       String? earningPercent, 
+      String? month, 
       String? earningAmount,}){
+    _userId = userId;
+    _name = name;
+    _bankName = bankName;
     _pos = pos;
     _totalAmount = totalAmount;
-    _month = month;
+    _totalLeads = totalLeads;
+    _bomBkt = bomBkt;
     _earningPercent = earningPercent;
+    _month = month;
     _earningAmount = earningAmount;
 }
 
   Data.fromJson(dynamic json) {
+    _userId = json['user_id'];
+    _name = json['name'];
+    _bankName = json['bank_name'];
     _pos = json['pos'];
     _totalAmount = json['total_amount'];
-    _month = json['month'];
+    _totalLeads = json['total_leads'];
+    _bomBkt = json['bom_bkt'];
     _earningPercent = json['earning_percent'];
+    _month = json['month'];
     _earningAmount = json['earning_amount'];
   }
+  String? _userId;
+  String? _name;
+  String? _bankName;
   String? _pos;
   String? _totalAmount;
-  String? _month;
+  String? _totalLeads;
+  String? _bomBkt;
   String? _earningPercent;
+  String? _month;
   String? _earningAmount;
-Data copyWith({  String? pos,
+Data copyWith({  String? userId,
+  String? name,
+  String? bankName,
+  String? pos,
   String? totalAmount,
-  String? month,
+  String? totalLeads,
+  String? bomBkt,
   String? earningPercent,
+  String? month,
   String? earningAmount,
-}) => Data(  pos: pos ?? _pos,
+}) => Data(  userId: userId ?? _userId,
+  name: name ?? _name,
+  bankName: bankName ?? _bankName,
+  pos: pos ?? _pos,
   totalAmount: totalAmount ?? _totalAmount,
-  month: month ?? _month,
+  totalLeads: totalLeads ?? _totalLeads,
+  bomBkt: bomBkt ?? _bomBkt,
   earningPercent: earningPercent ?? _earningPercent,
+  month: month ?? _month,
   earningAmount: earningAmount ?? _earningAmount,
 );
+  String? get userId => _userId;
+  String? get name => _name;
+  String? get bankName => _bankName;
   String? get pos => _pos;
   String? get totalAmount => _totalAmount;
-  String? get month => _month;
+  String? get totalLeads => _totalLeads;
+  String? get bomBkt => _bomBkt;
   String? get earningPercent => _earningPercent;
+  String? get month => _month;
   String? get earningAmount => _earningAmount;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['user_id'] = _userId;
+    map['name'] = _name;
+    map['bank_name'] = _bankName;
     map['pos'] = _pos;
     map['total_amount'] = _totalAmount;
-    map['month'] = _month;
+    map['total_leads'] = _totalLeads;
+    map['bom_bkt'] = _bomBkt;
     map['earning_percent'] = _earningPercent;
+    map['month'] = _month;
     map['earning_amount'] = _earningAmount;
     return map;
   }

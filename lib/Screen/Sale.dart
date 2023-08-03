@@ -19,7 +19,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'home_view/HomePage.dart';
 import 'ProductList.dart';
 import 'Product_Detail.dart';
@@ -60,18 +59,13 @@ class _SaleState extends State<Sale>
   void initState() {
     super.initState();
     callApi();
-    buttonController = new AnimationController(
-        duration: new Duration(milliseconds: 2000), vsync: this);
-
+    buttonController = new AnimationController(duration: new Duration(milliseconds: 2000), vsync: this);
     buttonSqueezeanimation = new Tween(
       begin: deviceWidth! * 0.7,
       end: 50.0,
     ).animate(new CurvedAnimation(
       parent: buttonController,
-      curve: new Interval(
-        0.0,
-        0.150,
-      ),
+      curve: new Interval(0.0, 0.150,),
     ));
   }
 
@@ -113,7 +107,6 @@ class _SaleState extends State<Sale>
     context.read<HomeProvider>().setCatLoading(true);
     context.read<HomeProvider>().setSecLoading(true);
     context.read<HomeProvider>().setSliderLoading(true);
-
     return callApi();
   }
 
@@ -133,8 +126,7 @@ class _SaleState extends State<Sale>
                 ),
               ),
             ],
-          )
-        : Container();
+          ):Container();
   }
 
   _getHeading(String title, int index) {

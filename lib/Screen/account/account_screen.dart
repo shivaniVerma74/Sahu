@@ -71,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "CASH" || getfeedback?.data?[0].codeType == "online" || getfeedback?.data?[0].codeType == "cash"?
+        child: getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "online"?
         Column(
          children: [
            Container(
@@ -84,7 +84,7 @@ class _AccountScreenState extends State<AccountScreen> {
                itemBuilder: (context, index) {
                return Column(
                  children: [
-                   SizedBox(height:10,),
+                   SizedBox(height:10),
                    Stack(
                      children: [
                        InkWell(

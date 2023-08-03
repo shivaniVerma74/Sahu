@@ -51,6 +51,7 @@ class Data {
   String? checkoutLatitude;
   String? checkoutLongitude;
   String? checkoutAddress;
+  String? timedistance;
   List<String>? images;
 
   Data(
@@ -67,6 +68,7 @@ class Data {
         this.checkoutLatitude,
         this.checkoutLongitude,
         this.checkoutAddress,
+        this.timedistance,
         this.images});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -83,6 +85,7 @@ class Data {
     checkoutLatitude = json['checkout_latitude'];
     checkoutLongitude = json['checkout_longitude'];
     checkoutAddress = json['checkout_address'];
+    timedistance = json['time_distance'];
     images = json['images'].cast<String>();
   }
 
@@ -102,6 +105,7 @@ class Data {
     data['checkout_longitude'] = this.checkoutLongitude;
     data['checkout_address'] = this.checkoutAddress;
     data['images'] = this.images;
+    data['time_distance'] = this.timedistance;
     return data;
   }
 }

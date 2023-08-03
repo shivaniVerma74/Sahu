@@ -54,35 +54,35 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
   void initState() {
     super.initState();
     getAddress();
-    GetLeadsData();
+    // GetLeadsData();
     getDistance();
     getStatus();
     getTodaysData();
   }
 
-  GetLeadsModel? getLeadData;
-  Future<void> GetLeadsData() async {
-    var headers = {
-      'Cookie': 'ci_session=f7f450979da7c100cfbf415c279cc332bfca8211'
-    };
-    var request = http.MultipartRequest('GET', Uri.parse('${baseUrl}get_leads'));
-    request.fields.addAll({
-      'user_id': '${CUR_USERID}'
-    });
-    print("useir id in get leads ${request.fields}");
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      var Result = await response.stream.bytesToString();
-      final finalResult = GetLeadsModel.fromJson(json.decode(Result));
-      setState(() {
-        getLeadData = finalResult;
-      });
-    }
-    else {
-      print(response.reasonPhrase);
-    }
-  }
+  // GetLeadsModel? getLeadData;
+  // Future<void> GetLeadsData() async {
+  //   var headers = {
+  //     'Cookie': 'ci_session=f7f450979da7c100cfbf415c279cc332bfca8211'
+  //   };
+  //   var request = http.MultipartRequest('GET', Uri.parse('${baseUrl}get_leads'));
+  //   request.fields.addAll({
+  //     'user_id': '${CUR_USERID}'
+  //   });
+  //   print("useir id in get leads ${request.fields}");
+  //   request.headers.addAll(headers);
+  //   http.StreamedResponse response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     var Result = await response.stream.bytesToString();
+  //     final finalResult = GetLeadsModel.fromJson(json.decode(Result));
+  //     setState(() {
+  //       getLeadData = finalResult;
+  //     });
+  //   }
+  //   else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
 
   GetLeadsStatusModel?getLeadStatus;
   Future<void> getStatus() async {
@@ -145,7 +145,6 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
   bool? errorMassage;
   Future<void> getUserCheckIn() async {
     SharedPreferences preferences= await SharedPreferences.getInstance();
-
     setState(() {
       lat1 = preferences.getString('lattt');
       long1 = preferences.getString('longg');
@@ -169,18 +168,14 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       var Result = await response.stream.bytesToString();
       final finalResult = CheckInModel.fromJson(json.decode(Result));
-
       errorMassage =finalResult.data.error;
       print('-------------errorr${errorMassage}');
-
       if(errorMassage==false){
         Navigator.push(context, MaterialPageRoute(builder: (context)=> CheckInScreen()));
       }else{
-
         Fluttertoast.showToast(msg:'${finalResult.data.msg}');
       }
     }
@@ -251,7 +246,7 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
             //   child: Text('${getLeadData?.message}',style: TextStyle(color: colors.primary,fontWeight: FontWeight.w700,fontSize:20),),
             // ):Center(child: CircularProgressIndicator()),
             SizedBox(height: 10),
-            getLeadData?.message!=null ? Container(
+             Container(
               child: Card(
                 elevation:5,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -600,7 +595,8 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                   ],
                 ),
               ),
-            ):Center(child: CircularProgressIndicator())
+            )
+                 // :Center(child: CircularProgressIndicator())
           ],
         ),
       ),

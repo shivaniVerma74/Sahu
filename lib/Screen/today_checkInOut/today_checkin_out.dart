@@ -138,7 +138,8 @@ class _TodayCheckInOutScreenState extends State<TodayCheckInOutScreen> {
                                           Text("Check In Address :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                           SizedBox(height: 10,),
                                           Text("Check Out Address :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-
+                                          SizedBox(height: 10,),
+                                          Text("Time Distance :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                         ],
                                       ),
                                       SizedBox(width:20,),
@@ -160,19 +161,21 @@ class _TodayCheckInOutScreenState extends State<TodayCheckInOutScreen> {
                                           Container(
                                               width:160,
                                               child: Text("${getUserCheckInOutModel?.data?[index].checkoutAddress}",overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),)),
+                                          SizedBox(height: 10,),
+                                          Text("${getUserCheckInOutModel?.data?[index].timedistance}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                         ],
                                       ),
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 20,),
+                                SizedBox(height: 20),
                               ],
                             ),
                         ),
                       ),
                     );
                   }):Center(child: CircularProgressIndicator())
-            )
+            ),
           ],
         ),
       ),

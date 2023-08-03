@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:omega_employee_management/Helper/Color.dart';
 import 'package:omega_employee_management/Helper/Constant.dart';
@@ -16,6 +16,7 @@ import 'package:omega_employee_management/Helper/String.dart';
 import 'package:omega_employee_management/Screen/home_view/HomePage.dart';
 import 'package:omega_employee_management/model_all_response/check_in_model.dart';
 import 'package:omega_employee_management/Screen/Auth_view/Login.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Helper/Session.dart';
 import '../../model_all_response/get_leads_model.dart';
@@ -274,13 +275,13 @@ class _CheckInScreenState extends State<CheckInScreen> {
       'remark': '${remarkCtr.text}'
     });
     print('--------Fieldssssss------${request.fields}');
-    for (var i = 0; i < imagePathList.length; i++) {
-      print('Imageeeeeeeeeeeeeeeeee${imagePathList}');
-      imagePathList == null
-          ? null
-          : request.files.add(await http.MultipartFile.fromPath(
-          'image', imagePathList[i].toString()));
-    }
+    imgFile == null ? null : request.files.add(await http.MultipartFile.fromPath(
+        'image', "${imgFile!.path}"));
+    print("imageee fileee in apiiiii ${imgFile!.path}");
+    // for (var i = 0; i < imgFile!.length; i++) {
+    //   print('Imageeeeeeeeeeeeeeeeee${imgFile}');
+    //
+    // }
     print('--------image------${request.fields}');
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -294,7 +295,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
       print(response.reasonPhrase);
     }
   }
-
   final List<String> items = [
     'Avaliable',
     'Not Avaliable',
@@ -425,8 +425,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                     fontSize: 14,
                   ),
                 ),
-              ))
-                  .toList(),
+              )).toList(),
               value: escValue,
               onChanged: (String? value) {
                 setState(() {
@@ -839,19 +838,19 @@ class _CheckInScreenState extends State<CheckInScreen> {
       // User canceled the picker
     }
   }
+
   Widget uploadMultiImage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(
-
-
           height: 10,
         ),
         InkWell(
             onTap: () async {
-              pickImageDialog(context, 1);
-
+              getImage(ImageSource.camera, context, 1);
+              // getImageCmera(ImageSource.camera, context, 1);
+              // pickImageDialog(context, 1);
               // await pickImages();
             },
             child: Container(
@@ -868,13 +867,79 @@ class _CheckInScreenState extends State<CheckInScreen> {
         const SizedBox(
           height: 10,
         ),
-        Visibility(
-            visible: isImages,
-            child: imagePathList != null ? buildGridView() : SizedBox.shrink()
-        )
+        imgFile == null || imgFile == "" ? Container():
+        Container(
+          height: MediaQuery.of(context).size.height/3,
+          child: Image.file(imgFile!),
+        ),
+        // Visibility(
+        //     visible: isImages,
+        //     child: imgFile != null ? buildGridView() : SizedBox.shrink()
+        // ),
       ],
     );
   }
+
+  File? _imageFile;
+
+  void requestPermission(BuildContext context,int i) async{
+    print("okay");
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.photos,
+      Permission.mediaLibrary,
+      Permission.storage,
+    ].request();
+    if(statuses[Permission.photos] == PermissionStatus.granted&& statuses[Permission.mediaLibrary] == PermissionStatus.granted){
+      getImage(ImageSource.camera,context,1);
+    }
+    // else{
+    //   getImageCmera(ImageSource.camera,context,1);
+    // }
+  }
+
+  var imagePathList1;
+  // bool isImages =  false;
+
+  void getCropImage(BuildContext context, int i, var image) async {
+    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+      sourcePath: image.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+    );
+    setState(() {
+      if (i == 1) {
+        _imageFile = File(croppedFile!.path);
+        print("imageeeee ${_imageFile}");
+      }
+    });
+  }
+
+  File? imgFile;
+  Future getImage(ImageSource source, BuildContext context, int i) async {
+    var image = await ImagePicker().pickImage(
+      source: source,
+    );
+    setState(() {
+      imgFile =File(image!.path);
+      print("imageee Fileeee ${imgFile}");
+    });
+    // getCropImage(context, i, image);
+    // Navigator.pop(context);
+  }
+
+  // Future getImageCmera(ImageSource source, BuildContext context, int i) async {
+  //   var image = await ImagePicker().pickImage(
+  //     source: source,
+  //   );
+  //   getCropImage(context, i, image);
+  //   Navigator.pop(context);
+  // }
+
   Widget buildGridView() {
     return Container(
       height: 200,
@@ -897,29 +962,30 @@ class _CheckInScreenState extends State<CheckInScreen> {
                       child: Image.file(File(imagePathList[index]),
                           fit: BoxFit.cover),
                     ),
-                  )),
+                  ),
+              ),
               Positioned(
                 top: 5,
                 right: 10,
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState((){
                       imagePathList.remove(imagePathList[index]);
                     });
-
                   },
                   child: Icon(
                     Icons.remove_circle,
                     size: 30,
                     color: Colors.red.withOpacity(0.7),),
                 ),
-              )
+              ),
             ],
           );
         },
       ),
     );
   }
+
   void pickImageDialog(BuildContext context,int i) async{
     return await showDialog<void>(
       context: context,
@@ -932,37 +998,37 @@ class _CheckInScreenState extends State<CheckInScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              InkWell(
-                onTap: () async {
-                  getFromGallery();
-                },
-                child:  Container(
-                  child: ListTile(
-                      title:  Text("Gallery"),
-                      leading: Icon(
-                        Icons.image,
-                        color: colors.primary,
-                      )),
-                ),
-              ),
-              // Container(
-              //   width: 200,
-              //   height: 1,
-              //   color: Colors.black12,
-              // ),
               // InkWell(
               //   onTap: () async {
-              //     getImage(ImgSource.Camera, context, i);
+              //     getFromGallery();
               //   },
-              //   child: Container(
+              //   child:  Container(
               //     child: ListTile(
-              //         title:  Text("Camera"),
+              //         title:  Text("Gallery"),
               //         leading: Icon(
-              //           Icons.camera,
+              //           Icons.image,
               //           color: colors.primary,
               //         )),
               //   ),
               // ),
+              Container(
+                width: 200,
+                height: 1,
+                color: Colors.black12,
+              ),
+              InkWell(
+                onTap: () async {
+                  //getImage(ImgSource.Camera, context, i);
+                },
+                child: Container(
+                  child: ListTile(
+                      title:  Text("Camera"),
+                      leading: Icon(
+                        Icons.camera,
+                        color: colors.primary,
+                      )),
+                ),
+              ),
             ],
           ),
         );
@@ -989,39 +1055,17 @@ class _CheckInScreenState extends State<CheckInScreen> {
       });
   }
 
-  Future getImage(ImgSource source, BuildContext context, int i) async {
-    var image = await ImagePickerGC.pickImage(
-      imageQuality:40,
-      context: context,
-      source: source,
-      cameraIcon: const Icon(
-        Icons.add,
-        color: Colors.red,
-      ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
-    );
-    getCropImage(context, i, image);
-    // back();
-  }
-  void getCropImage(BuildContext context, int i, var image) async {
-    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
-      sourcePath: image.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-    );
-    Navigator.pop(context);
-    if (i == 1) {
-      imagePathList.add(croppedFile!.path);
-      setState(() {
-        isImages = true;
-      });
-      print("this is my camera image $imagePathList");
-      // imageFile = File(croppedFile!.path);
-    }
-    back();
-  }
+  // Future getImage(ImgSource source, BuildContext context, int i) async {
+  //   var image = await ImagePickerGC.pickImage(
+  //     imageQuality:40,
+  //     context: context,
+  //     source: source,
+  //     cameraIcon: const Icon(
+  //       Icons.add,
+  //       color: Colors.red,
+  //     ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+  //   );
+  //   getCropImage(context, i, image);
+  //   // back();
+  // }
 }

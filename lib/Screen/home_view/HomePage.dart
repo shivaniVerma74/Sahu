@@ -241,7 +241,6 @@ Future<void> getAddress()async {
       var Result = await response.stream.bytesToString();
       print(Result);
       final finalResult = GetLeadsModel.fromJson(json.decode(Result));
-
       if(pinCodeController.text.isNotEmpty){
         setState(() {
           getLeadData = finalResult;
@@ -625,96 +624,105 @@ Future<void> getAddress()async {
       Column(
       children: [
         Container(
-          height:MediaQuery.of(context).size.height/5.8,
+          height:MediaQuery.of(context).size.height/5.3,
           child: Padding(
             padding: const EdgeInsets.only(left:10.0,right: 10),
-            child: Card(
-              elevation:5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  Padding(
+            child:
+            ListView.builder(
+                itemCount: getEarningModel?.data?.length,
+                shrinkWrap: true,
+                // physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return
+                    Padding(
                     padding: const EdgeInsets.only(left:10.0,right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Month:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
-                            SizedBox(height: 10),
-                            Text("Earning Percent:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-                            SizedBox(height: 10),
-                            Text("Earning Amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${getEarningModel?.data?[0].month}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                            SizedBox(height: 10),
-                            Text("${getEarningModel?.data?[0].earningPercent}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp), overflow: TextOverflow.ellipsis,),
-                            SizedBox(height: 10),
-                            Text("${getEarningModel?.data?[0].earningAmount}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                          ],
-                        ),
-                      ],
+                    child: Card(
+                      elevation:5,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(left:10.0,right: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Month:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("Earning Percent:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("Earning Amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("Bank Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("BKT:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("${getEarningModel?.data?[index].month}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("${getEarningModel?.data?[index].earningPercent}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp), overflow: TextOverflow.ellipsis,),
+                                    SizedBox(height: 10),
+                                    Text("${getEarningModel?.data?[index].earningAmount}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("${getEarningModel?.data?[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                    SizedBox(height: 10),
+                                    Text("${getEarningModel?.data?[index].bomBkt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ),
+                  );
+                }),
+            // Card(
+            //   elevation:5,
+            //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            //   child: Column(
+            //     children: [
+            //       SizedBox(height: 10),
+            //       Padding(
+            //         padding: const EdgeInsets.only(left:10.0,right: 10),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text("Month:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
+            //                 SizedBox(height: 10),
+            //                 Text("Earning Percent:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+            //                 SizedBox(height: 10),
+            //                 Text("Earning Amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+            //               ],
+            //             ),
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text("${getEarningModel?.data?[0].month}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+            //                 SizedBox(height: 10),
+            //                 Text("${getEarningModel?.data?[0].earningPercent}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp), overflow: TextOverflow.ellipsis,),
+            //                 SizedBox(height: 10),
+            //                 Text("${getEarningModel?.data?[0].earningAmount}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+            //               ],
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       SizedBox(height: 10),
+            //     ],
+            //   ),
+            // ),
           ),
-          // ListView.builder(
-          //     itemCount: getEarningModel?.data?.length,
-          //     shrinkWrap: true,
-          //     physics: NeverScrollableScrollPhysics(),
-          //     itemBuilder: (context, index) {
-          //       return
-          //         Padding(
-          //         padding: const EdgeInsets.only(left:10.0,right: 10),
-          //         child: Card(
-          //           elevation:5,
-          //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          //           child: Column(
-          //             children: [
-          //               SizedBox(height: 10),
-          //               Padding(
-          //                 padding: const EdgeInsets.only(left:10.0,right: 10),
-          //                 child: Row(
-          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                   children: [
-          //                     Column(
-          //                       crossAxisAlignment: CrossAxisAlignment.start,
-          //                       children: [
-          //                         Text("Month:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
-          //                         SizedBox(height: 10),
-          //                         Text("Earning Percent:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-          //                         SizedBox(height: 10),
-          //                         Text("Earning Amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-          //                       ],
-          //                     ),
-          //                     Column(
-          //                       crossAxisAlignment: CrossAxisAlignment.start,
-          //                       children: [
-          //                         Text("${getEarningModel?.data?[index].month}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-          //                         SizedBox(height: 10),
-          //                         Text("${getEarningModel?.data?[index].earningPercent}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp), overflow: TextOverflow.ellipsis,),
-          //                         SizedBox(height: 10),
-          //                         Text("${getEarningModel?.data?[index].earningAmount}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-          //                       ],
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //               SizedBox(height: 10),
-          //             ],
-          //           ),
-          //         ),
-          //       );
-          //     }),
         ),
       ],
     );
