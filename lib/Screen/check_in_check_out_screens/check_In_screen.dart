@@ -48,13 +48,10 @@ class _CheckInScreenState extends State<CheckInScreen> {
  bool? errormsg;
  String? lead_id;
 
-
-
   myLeadId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     lead_id = preferences.getString('lead_id');
     print("leaddata is here-------- ${lead_id}");
-
   }
 
 
@@ -74,7 +71,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       var Response = await response.stream.bytesToString();
       final finalResponse = CheckInModel.fromJson(json.decode(Response));
@@ -89,8 +85,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
       print(response.reasonPhrase);
     }
   }
-
-
 
   Future<void> getCurrentLoc() async {
     LocationPermission permission;
@@ -122,8 +116,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
         longitude = position.longitude.toString();
        // loc.lng = position.longitude.toString();
         //loc.lat = position.latitude.toString();
-
-
         print('=============${latitude}');
         print('Longitude*************${longitude}');
         print('Current Addresssssss${currentAddress.text}');
@@ -250,8 +242,11 @@ class _CheckInScreenState extends State<CheckInScreen> {
     );
   }
 
-
+ bool? iLoading = false;
   addFeedbacks() async{
+    setState(() {
+      iLoading = true;
+    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? leadId = prefs.getString('lead_id');
     String? uids = prefs.getString('new_user_id');
@@ -282,14 +277,19 @@ class _CheckInScreenState extends State<CheckInScreen> {
     //   print('Imageeeeeeeeeeeeeeeeee${imgFile}');
     //
     // }
-    print('--------image------${request.fields}');
+    print('--------image------${request.files}');
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
+    setState(() {
+      iLoading = false;
+    });
     if (response.statusCode == 200) {
+      print("workingggggg");
        var result = await response.stream.bytesToString();
        var finalResult = jsonDecode(result);
+       print("final reslutttt nowwww${finalResult}");
        Fluttertoast.showToast(msg: "${finalResult['message']}");
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+       Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
     }
     else {
       print(response.reasonPhrase);
@@ -762,11 +762,23 @@ class _CheckInScreenState extends State<CheckInScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                  style: ElevatedButton.styleFrom(
-                   primary: Color(0xff004276)
+                   primary: iLoading == true ?  Color(0xff004276).withOpacity(0.5):
+                   Color(0xff004276)
                  ),
                   onPressed: () {
-                    addFeedbacks();
-                  }, child: Text("Submit",)),
+
+                   if(addressValue == null || addressValue == ""
+                   || customerValue == null || customerValue == "" || familymemberValue == null || familymemberValue == "" ||
+                       vehicleValue == null || vehicleValue == "" || codeValue == null || codeValue == "" ||  dateController.text.length == 0
+                   || remarkCtr.text.length == 0 || imgFile == null || imgFile == ""
+                   ) {
+                     Fluttertoast.showToast(msg: "Please Fill All Fields");
+                   }
+                    else {
+                     addFeedbacks();///shivi
+
+                   };
+                  }, child: Text("Submit")),
               SizedBox(height: 10),
             ],
           ),

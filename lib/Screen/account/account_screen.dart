@@ -71,7 +71,8 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "online"?
+        child: getfeedback?.data == null || getfeedback?.data?.length == 0? Center(child: Text("No Data Found"),):
+        getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "online"?
         Column(
          children: [
            Container(

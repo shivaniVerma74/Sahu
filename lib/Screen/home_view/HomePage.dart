@@ -288,6 +288,7 @@ Future<void> getAddress()async {
     super.initState();
     getStatus();
     getAddress();
+    GetLeads();
     GetLeadsData();
     bankData();
     getEarning();
@@ -387,9 +388,9 @@ Future<void> getAddress()async {
                  ),
                ],
              ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               customTabbar(),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               _currentIndex==1?
               Container(
                 height:MediaQuery.of(context).size.height/2.8,
@@ -454,72 +455,77 @@ Future<void> getAddress()async {
                         ),
                       );
                     }),
-              ):_currentIndex==2? Container(
+              ): _currentIndex==2? Container(
                 height: MediaQuery.of(context).size.height/2.5,
-                child: getLeadData?.data == null||getLeadData?.data==""?Center(child: Text("No Leads Found")) :ListView.builder(
-                    itemCount:getLeadData?.data?.length==null||getLeadData?.data?.length==""?0:getLeadData?.data?.length,
+                child: leadData == null||leadData ==""? Center(child: Text("No Leads Found")) :ListView.builder(
+                    itemCount: leadData.length == null || leadData.length==""?0:leadData.length,
                     shrinkWrap: true,
                     //physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left:10.0,right: 10,bottom: 10),
-                        child: Card(
-                          elevation:5,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.only(left:10.0,right: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Bank Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
-                                        SizedBox(height: 15,),
-                                        Text("Customer Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-                                        SizedBox(height: 15,),
-                                        Text("EMI amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
-                                        SizedBox(height: 15,),
-                                        Text("Phone :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
-                                        SizedBox(height: 15,),
-                                        Text("Total Charge :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-                                        SizedBox(height: 10,),
-                                        Text("Primary Address Pin:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
-                                      ],
-                                    ),
-                                    Column(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllLeadsDetails(model: leadData[index])));
+                          },
+                          child: Card(
+                            elevation:5,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.only(left:10.0,right: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          getLeadData?.data?[index].bankName==null||getLeadData?.data?[index].bankName==""? Text("--"):Text("${getLeadData?.data?[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                          Text("Bank Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
                                           SizedBox(height: 15,),
-                                          Text("${getLeadData?.data?[index].customername}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                          Text("Customer Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                           SizedBox(height: 15,),
-                                          Text("${getLeadData?.data?[index].emiAmt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                          Text("EMI amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
                                           SizedBox(height: 15,),
-                                          Text("${getLeadData?.data?[index].phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                          Text("Phone :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
                                           SizedBox(height: 15,),
-                                          Text("${getLeadData?.data?[index].totalCharges}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
-                                          SizedBox(height: 15,),
-                                          Text("${getLeadData?.data?[index].primaryAddressPin}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.primary),),
+                                          Text("Total Charge :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                           SizedBox(height: 10,),
-                                        ]
-                                    ),
-                                  ],
+                                          Text("Primary Address Pin:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                        ],
+                                      ),
+                                      Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            leadData[index].bankName==null||leadData[index].bankName==""? Text("--"):Text("${leadData[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                            SizedBox(height: 15),
+                                            Text("${leadData[index].customername}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                            SizedBox(height: 15),
+                                            Text("${leadData[index].emiAmt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                            SizedBox(height: 15),
+                                            Text("${leadData[index].phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                            SizedBox(height: 15),
+                                            Text("${leadData[index].totalCharges}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                            SizedBox(height: 15),
+                                            Text("${leadData[index].primaryAddressPin}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.primary),),
+                                            SizedBox(height: 10),
+                                          ]
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(
-                                width:MediaQuery.of(context).size.width/1.2,
-                                child: Divider(
-                                  color: colors.primary,
-                                  height:15,
-                                  thickness: 1,
+                                SizedBox(height: 10),
+                                Container(
+                                  width:MediaQuery.of(context).size.width/1.2,
+                                  child: Divider(
+                                    color: colors.primary,
+                                    height:15,
+                                    thickness: 1,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -576,7 +582,9 @@ Future<void> getAddress()async {
                                         children: [
                                           Text("${leadData[index].bankName}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                           SizedBox(height: 12),
-                                          Text("${leadData[index].customername}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                          Container(
+                                             width: 120,
+                                              child: Text("${leadData[index].customername}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),)),
                                           SizedBox(height: 12),
                                           Text("${leadData[index].bomBkt}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                           SizedBox(height: 12),
@@ -1645,9 +1653,7 @@ Future<void> getAddress()async {
             InkWell(
               onTap: (){
                 setState(() {
-
                   _currentIndex = 2;
-
                   showAlertDialog(
                     context,
                     'Pin Code',
@@ -1729,7 +1735,6 @@ Future<void> getAddress()async {
   BankDetailsModel? bankDetailsModel;
   bool isLoading = true;
   Future<void> bankData() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uids = prefs.getString('new_user_id');
     print('kkkkkkkk ${uids}');
@@ -1738,7 +1743,6 @@ Future<void> getAddress()async {
   };
   var request = http.Request('GET', Uri.parse('${baseUrl}get_lead_bankname?user_id=${uids}'));
   request.headers.addAll(headers);
-
   http.StreamedResponse response = await request.send();
   if (response.statusCode == 200) {
     var Result = await response.stream.bytesToString();
@@ -1767,8 +1771,9 @@ Future<void> getAddress()async {
           actions: <Widget>[
             TextFormField(
               maxLength: 6,
-              onTap: () {
+              onChanged: (value) {
              setState(() {
+               searchLeads1(value);
                GetLeadsData();
              });
               },
@@ -1779,21 +1784,20 @@ Future<void> getAddress()async {
                 contentPadding: EdgeInsets.only(top: 5,left: 10),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10)
-                )
+                ),
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(onPressed: (){
+            ElevatedButton(onPressed: () {
               if(pinCodeController.text.isNotEmpty){
                 GetLeadsPinData();
                 Navigator.pop(context);
               }else{
                 Fluttertoast.showToast(msg: 'Please Enter Pin code');
               }
-
-
-            },style: ElevatedButton.styleFrom(backgroundColor: colors.primary),
-                child:Text('Done',style: TextStyle(color: colors.whiteTemp),))
+            },
+                style: ElevatedButton.styleFrom(backgroundColor: colors.primary),
+                child:Text('Done',style: TextStyle(color: colors.whiteTemp)))
           ],
         );
       },
@@ -1808,7 +1812,7 @@ Future<void> getAddress()async {
     };
     var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/get_leads?user_id=${CUR_USERID}&search=${pinCodeController.text}'));
     request.fields.addAll({
-      'user_id': '${CUR_USERID}',
+      'user_id':'${CUR_USERID}',
       'search':_currentIndex==2?'${pinCodeController.text}':" "
     });
     print("---fieldsssss----${request.fields}");
@@ -1831,13 +1835,62 @@ Future<void> getAddress()async {
   }
 
 
+
+  Future<void> GetLeads() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var headers = {
+      'Cookie': 'ci_session=e739bf3509ae8bb7102d8891dd88233ab61f48ff'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/get_leads'));
+    request.fields.addAll({
+      'user_id':'${CUR_USERID}',
+      // 'search':_currentIndex==2?'${pinCodeController.text}':" "
+    });
+    print("---fieldsssss hereerere${request.fields}");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var Result = await response.stream.bytesToString();
+      print(Result);
+      final finalResult = GetLeadsModel.fromJson(json.decode(Result));
+      setState(() {
+        leadData = finalResult.data ?? [];
+      });
+      for(int i=0; i< leadData.length; i++)
+        preferences.setString("lead_id", leadData[i].id ?? "");
+      print("get-----leads---data${leadData}");
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
   searchLeads(String value) {
     if (value.isEmpty) {
       GetLeadsData();
       setState(() {});
     }else{
       final suggestions = leadData.where((element) {
-        final leadsTitle = element.customername!.toLowerCase();
+        final leadsTitle = element.customername.toString().toLowerCase();
+        final leadsPhone = element.phone1.toString().toLowerCase();
+        final leadsId = element.agreementid.toString().toLowerCase();
+        final input = value.toLowerCase();
+        return leadsTitle.contains(input) || leadsPhone.contains(input) || leadsId.contains(input)  ;
+      }).toList();
+      leadData = suggestions;
+      setState(() {
+      });
+    }
+  }
+
+
+  searchLeads1(String value) {
+    if (value.isEmpty) {
+      GetLeadsData();
+      setState(() {});
+    }else{
+      final suggestions = leadData.where((element) {
+        final leadsTitle = element.primaryAddressPin!.toLowerCase();
         final input = value.toLowerCase();
         return leadsTitle.contains(input);
       }).toList();

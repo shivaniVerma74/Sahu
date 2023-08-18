@@ -132,7 +132,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
       }
 
 
-    getShare();
+    // getShare();
 
     _oldSelVarient = widget.model!.selVarient;
 
@@ -145,7 +145,6 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
     notificationoffset = 0;
 
     getProduct();
-
     _progressAnimcontroller = AnimationController(
       duration: Duration(milliseconds: 200),
       vsync: this,
@@ -2787,35 +2786,35 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
         : Container();
   }
 
-  Future<void> getShare() async {
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: deepLinkUrlPrefix,
-      link: Uri.parse(
-          'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${widget.model!.id}'),
-      androidParameters: AndroidParameters(
-        packageName: packageName,
-        minimumVersion: 1,
-      ),
-      iosParameters: IosParameters(
-        bundleId: iosPackage,
-        minimumVersion: '1',
-        appStoreId: appStoreId,
-      ),
-    );
-
-    final Uri longDynamicUrl = await parameters.buildUrl();
-
-    shortenedLink = await DynamicLinkParameters.shortenUrl(
-      longDynamicUrl,
-      new DynamicLinkParametersOptions(
-          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
-    );
-
-    new Future.delayed(Duration.zero, () {
-      shareLink =
-          "\n$appName\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n${getTranslated(context, 'IOSLBL')}\n$iosLink";
-    });
-  }
+  // Future<void> getShare() async {
+  //   final DynamicLinkParameters parameters = DynamicLinkParameters(
+  //     uriPrefix: deepLinkUrlPrefix,
+  //     link: Uri.parse(
+  //         'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${widget.model!.id}'),
+  //     androidParameters: AndroidParameters(
+  //       packageName: packageName,
+  //       minimumVersion: 1,
+  //     ),
+  //     iosParameters: IosParameters(
+  //       bundleId: iosPackage,
+  //       minimumVersion: '1',
+  //       appStoreId: appStoreId,
+  //     ),
+  //   );
+  //
+  //   final Uri longDynamicUrl = await parameters.buildUrl();
+  //
+  //   shortenedLink = await DynamicLinkParameters.shortenUrl(
+  //     longDynamicUrl,
+  //     new DynamicLinkParametersOptions(
+  //         shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
+  //   );
+  //
+  //   new Future.delayed(Duration.zero, () {
+  //     shareLink =
+  //         "\n$appName\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n${getTranslated(context, 'IOSLBL')}\n$iosLink";
+  //   });
+  // }
 
   _warrenty() {
     String? warranty = widget.model!.warranty;

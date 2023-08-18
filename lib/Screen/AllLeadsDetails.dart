@@ -481,7 +481,6 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                                     overflow: TextOverflow.ellipsis,))),
                               SizedBox(height: 10),
                               Container(
-
                                   width: 170,
                                   child: Text("${widget.model?.primaryAddressPin}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),)),
                               SizedBox(height: 15),
