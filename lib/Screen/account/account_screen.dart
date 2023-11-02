@@ -71,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: getfeedback?.data == null || getfeedback?.data?.length == 0? Center(child: Text("No Data Found"),):
+        child: getfeedback?.data == null || getfeedback?.data?.length == 0 ? Center(child: Text("No Data Found"),):
         getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "online"?
         Column(
          children: [
@@ -120,17 +120,19 @@ class _AccountScreenState extends State<AccountScreen> {
                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                        children: [
                                          Text("Customer Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
-                                         Text("${getfeedback?.data?[index].customername}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                         getfeedback?.data?[index].name == null || getfeedback?.data?[index].name == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),):
+                                         Text("${getfeedback?.data?[index].name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                        ],
                                      ),
                                    ),
                                    SizedBox(height: 10),
                                    Padding(
                                      padding: const EdgeInsets.only(left:15.0,right: 15),
-                                     child: Row(
+                                     child: Row (
                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                        children: [
                                          Text("Code Type :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.fontColor),),
+                                         getfeedback?.data?[index].codeType == null || getfeedback?.data?[index].codeType == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),) :
                                          Text("${getfeedback?.data?[index].codeType}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                        ],
                                      ),
@@ -157,7 +159,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                    //     ],
                                    //   ),
                                    // ),
-                                   SizedBox(height: 20,),
+                                   SizedBox(height: 20),
                                  ],
                                ),
                              ),

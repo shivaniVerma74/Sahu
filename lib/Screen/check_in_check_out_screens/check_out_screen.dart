@@ -32,8 +32,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   var pinController = TextEditingController();
   var currentAddress = TextEditingController();
 
-
-
   // Future<void>CheckInNow() async {
   //   var headers = {
   //     'Cookie': 'ci_session=3515d88c5cab45d32a201da39275454c5d051af2'
@@ -61,8 +59,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   //
   //
   // }
-
-
 
   Future<void> getCurrentLoc() async {
 
@@ -168,10 +164,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     else {
       print(response.reasonPhrase);
     }
-
-
-
-
   }
 
 
@@ -275,10 +267,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               decoration:BoxDecoration(
                   color:colors.primary,
                   borderRadius: BorderRadius.circular(30)),
-              child: ElevatedButton(onPressed: (){
+              child: ElevatedButton(onPressed: () {
                 getCurrentLoc();
               },style: ElevatedButton.styleFrom(backgroundColor:colors.primary), child:Text('Check Out Now ')))
-
         ],
       ),
     );

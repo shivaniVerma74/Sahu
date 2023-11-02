@@ -1,6 +1,6 @@
 /// error : false
 /// message : "User report"
-/// data : [{"user_id":"420","name":"Ajay","pos":"251917.65","total_leads":"9","bom_bkt":"1","paid":"3.99%","pptp":"3.99%","rb":"0.00%","prb":"0.00%"},{"user_id":"420","name":"Ajay","pos":"29440.79","total_leads":"3","bom_bkt":"2","paid":"0.00%","pptp":"0.00%","rb":"0.00%","prb":"0.00%"},{"user_id":"420","name":"Ajay","pos":"9823.83","total_leads":"1","bom_bkt":"3","paid":"0.00%","pptp":"0.00%","rb":"0.00%","prb":"0.00%"},{"user_id":"420","name":"Ajay","pos":"1043067.0299999999","total_leads":"10","bom_bkt":"X","paid":"15.83%","pptp":"15.83%","rb":"4.24%","prb":"0.00%"}]
+/// data : [{"user_id":"498","name":"Mithun Baulia","bank_name":"L&T CL","pos":"3838890.239999999","total_leads":"46","bom_bkt":"1","paid":"1.72%","pptp":"5.37%","rb":"0.00%","prb":"0.00%"},{"user_id":"498","name":"Mithun Baulia","bank_name":"L&T CL","pos":"1238806.8199999998","total_leads":"14","bom_bkt":"2","paid":"2.29%","pptp":"2.29%","rb":"0.00%","prb":"0.00%"},{"user_id":"498","name":"Mithun Baulia","bank_name":"L&T CL","pos":"1057576.34","total_leads":"8","bom_bkt":"3","paid":"0.14%","pptp":"1.00%","rb":"0.00%","prb":"0.00%"},{"user_id":"498","name":"Mithun Baulia","bank_name":"L&T CL","pos":"58056.64","total_leads":"1","bom_bkt":"x","paid":"115.81%","pptp":"619.26%","rb":"0.00%","prb":"0.00%"}]
 
 class GetStandingModel {
   GetStandingModel({
@@ -48,13 +48,14 @@ GetStandingModel copyWith({  bool? error,
 
 }
 
-/// user_id : "420"
-/// name : "Ajay"
-/// pos : "251917.65"
-/// total_leads : "9"
+/// user_id : "498"
+/// name : "Mithun Baulia"
+/// bank_name : "L&T CL"
+/// pos : "3838890.239999999"
+/// total_leads : "46"
 /// bom_bkt : "1"
-/// paid : "3.99%"
-/// pptp : "3.99%"
+/// paid : "1.72%"
+/// pptp : "5.37%"
 /// rb : "0.00%"
 /// prb : "0.00%"
 
@@ -62,6 +63,7 @@ class Data {
   Data({
       String? userId, 
       String? name, 
+      String? bankName, 
       String? pos, 
       String? totalLeads, 
       String? bomBkt, 
@@ -71,6 +73,7 @@ class Data {
       String? prb,}){
     _userId = userId;
     _name = name;
+    _bankName = bankName;
     _pos = pos;
     _totalLeads = totalLeads;
     _bomBkt = bomBkt;
@@ -83,6 +86,7 @@ class Data {
   Data.fromJson(dynamic json) {
     _userId = json['user_id'];
     _name = json['name'];
+    _bankName = json['bank_name'];
     _pos = json['pos'];
     _totalLeads = json['total_leads'];
     _bomBkt = json['bom_bkt'];
@@ -93,6 +97,7 @@ class Data {
   }
   String? _userId;
   String? _name;
+  String? _bankName;
   String? _pos;
   String? _totalLeads;
   String? _bomBkt;
@@ -102,6 +107,7 @@ class Data {
   String? _prb;
 Data copyWith({  String? userId,
   String? name,
+  String? bankName,
   String? pos,
   String? totalLeads,
   String? bomBkt,
@@ -111,6 +117,7 @@ Data copyWith({  String? userId,
   String? prb,
 }) => Data(  userId: userId ?? _userId,
   name: name ?? _name,
+  bankName: bankName ?? _bankName,
   pos: pos ?? _pos,
   totalLeads: totalLeads ?? _totalLeads,
   bomBkt: bomBkt ?? _bomBkt,
@@ -121,6 +128,7 @@ Data copyWith({  String? userId,
 );
   String? get userId => _userId;
   String? get name => _name;
+  String? get bankName => _bankName;
   String? get pos => _pos;
   String? get totalLeads => _totalLeads;
   String? get bomBkt => _bomBkt;
@@ -133,6 +141,7 @@ Data copyWith({  String? userId,
     final map = <String, dynamic>{};
     map['user_id'] = _userId;
     map['name'] = _name;
+    map['bank_name'] = _bankName;
     map['pos'] = _pos;
     map['total_leads'] = _totalLeads;
     map['bom_bkt'] = _bomBkt;

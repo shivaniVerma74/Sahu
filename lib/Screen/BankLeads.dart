@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
 import '../../Helper/Color.dart';
 import '../../Helper/String.dart';
@@ -84,6 +85,13 @@ class _BankLeadsState extends State<BankLeads> {
     }
   }
 
+ _callNumber(String? mobileNumber) async {
+   var number = "${mobileNumber}";
+   print("numberrrrr ${number}");
+   bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+   print("mobileee ${res}");
+ }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +99,7 @@ class _BankLeadsState extends State<BankLeads> {
         backgroundColor: colors.primary,
         centerTitle: true,
         elevation: 0,
-        title: Text("Bank Leads", style: TextStyle(fontSize: 15,),),
+        title: Text("Bank Leads", style: TextStyle(fontSize: 15)),
       ),
       body: SingleChildScrollView(
         child:
@@ -118,7 +126,7 @@ class _BankLeadsState extends State<BankLeads> {
                   ),
                 ),
               ),
-               SizedBox(height: 10,),
+               SizedBox(height: 10),
               // isLoading == true ? CircularProgressIndicator(color: colors.primary,) :
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -184,7 +192,11 @@ class _BankLeadsState extends State<BankLeads> {
                                                   SizedBox(height: 12),
                                                   Text("${leadData[index].agreementid}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                                   SizedBox(height: 12),
-                                                  Text("${leadData[index].phone1}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      _callNumber(leadData[index].phone1);
+                                                    },
+                                                      child: Text("${leadData[index].phone1}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),)),
                                                   // SizedBox(height: 10,),
                                                   // address3!=null ?Text("${getLeadData?.data?[index].primaryAddress}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),):Text('Address not found'),
                                                   // SizedBox(height: 10,),

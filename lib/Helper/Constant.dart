@@ -16,6 +16,7 @@ const int perPage = 10;
 // final String baseUrl = 'http://inlizer.com/app/v1/api/';
 // final String baseUrl ='https://rekoindia.com/app/v1/api/';
 // final String baseUrl= 'https://developmentalphawizz.com/referral_management/app/v1/api/';
+
 final String baseUrl = 'https://alphawizzserver.com/sahu/app/v1/api/';
     //'https://admin.aimmoney.in/app/v1/api/';
     //'https://developmentalphawizz.com/reko/app/v1/api/';

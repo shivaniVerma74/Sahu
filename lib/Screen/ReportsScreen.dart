@@ -63,6 +63,7 @@ class _ReportScreenState extends State<ReportScreen> {
     request.fields.addAll({
       'user_id': '${uids}'
     });
+    print("possss reporttt ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -112,7 +113,7 @@ class _ReportScreenState extends State<ReportScreen> {
         getReportModel?.data==null||getReportModel?.data==""? Center(child: CircularProgressIndicator()):Container(
           height:MediaQuery.of(context).size.height/1.3,
           child: ListView.builder(
-              itemCount: getReportModel?.data==null || getReportModel?.data==""? 0 :getReportModel?.data?.length,
+              itemCount: getReportModel?.data == null || getReportModel?.data==""? 0 :getReportModel?.data?.length,
               shrinkWrap: true,
               // physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -152,7 +153,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                   children: [
                                     Text("${getReportModel?.data?[index].name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                     SizedBox(height: 10),
-                                    Text("${getReportModel?.data?[index].userId}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                    Text("${getReportModel?.data?[index].bomBkt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                     SizedBox(height: 10),
                                     Text("${getReportModel?.data?[index].totalLeads}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                     SizedBox(height: 10),
@@ -274,6 +275,8 @@ class _ReportScreenState extends State<ReportScreen> {
                                 children: [
                                   Text("Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
                                   SizedBox(height: 10,),
+                                  Text("Bank Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
+                                  SizedBox(height: 10,),
                                   Text("BKT:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                   SizedBox(height: 10,),
                                   Text("Paid:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
@@ -283,12 +286,15 @@ class _ReportScreenState extends State<ReportScreen> {
                                   Text("RB:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                   SizedBox(height: 10,),
                                   Text("PRB:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
+                                  // Text("Bank Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("${getStandingModel?.data?[index].name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                  SizedBox(height: 10),
+                                  Text("${getStandingModel?.data?[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                   SizedBox(height: 10),
                                   Text("${getStandingModel?.data?[index].bomBkt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                   SizedBox(height: 10),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omega_employee_management/Model/category_model.dart';
 import 'package:omega_employee_management/Screen/ReportsScreen.dart';
@@ -360,8 +361,7 @@ Future<void> getAddress()async {
                       suffixIcon: Container(
                           width: 20,
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: colors.primary),
-                          child: Icon(
-                              Icons.search, color: Colors.white)),
+                          child: Icon(Icons.search, color: Colors.white)),
                       hintText: "Search here",
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
                   ),
@@ -455,7 +455,8 @@ Future<void> getAddress()async {
                         ),
                       );
                     }),
-              ): _currentIndex==2? Container(
+              ):
+              _currentIndex==2? Container(
                 height: MediaQuery.of(context).size.height/2.5,
                 child: leadData == null||leadData ==""? Center(child: Text("No Leads Found")) :ListView.builder(
                     itemCount: leadData.length == null || leadData.length==""?0:leadData.length,
@@ -498,19 +499,23 @@ Future<void> getAddress()async {
                                       Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            leadData[index].bankName==null||leadData[index].bankName==""? Text("--"):Text("${leadData[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                            leadData[index].bankName == null || leadData[index].bankName == "" ? Text("--") : Text("${leadData[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                                             SizedBox(height: 15),
                                             Text("${leadData[index].customername}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                             SizedBox(height: 15),
                                             Text("${leadData[index].emiAmt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                             SizedBox(height: 15),
-                                            Text("${leadData[index].phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                            InkWell(
+                                              onTap: () {
+                                                _callNumber(leadData[index].phone1);
+                                              },
+                                                child: Text("${leadData[index].phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),)),
                                             SizedBox(height: 15),
                                             Text("${leadData[index].totalCharges}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                             SizedBox(height: 15),
                                             Text("${leadData[index].primaryAddressPin}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.primary),),
                                             SizedBox(height: 10),
-                                          ]
+                                          ],
                                       ),
                                     ],
                                   ),
@@ -626,6 +631,13 @@ Future<void> getAddress()async {
     );
   }
 
+
+  _callNumber(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
 
   Widget earningView() {
     return  getEarningModel?.error == true ? Text("No Earning Avaliable!", style: TextStyle(fontSize: 13,),):
@@ -1616,6 +1628,7 @@ Future<void> getAddress()async {
 
   int _currentIndex = 1;
   var bankiNDEX;
+
   customTabbar(){
     return Padding(
       padding: const EdgeInsets.only(left:10.0,right:10),
@@ -1649,9 +1662,9 @@ Future<void> getAddress()async {
                 ),
               ),
             ),
-            SizedBox(width:10,),
+            SizedBox(width:10),
             InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
                   _currentIndex = 2;
                   showAlertDialog(
@@ -1660,7 +1673,6 @@ Future<void> getAddress()async {
                     'Please Enter Pin Code Here!',
                   );
                 });
-
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -1678,10 +1690,10 @@ Future<void> getAddress()async {
             ),
             SizedBox(width:10),
             InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
                   _currentIndex = 3;
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReportScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReportScreen()));
                 });
               },
               child: Padding(
@@ -1689,8 +1701,7 @@ Future<void> getAddress()async {
                 child: Container(
                   decoration: BoxDecoration(
                       color: _currentIndex == 3 ?
-                      colors.primary
-                          : colors.primary.withOpacity(0.2),
+                      colors.primary : colors.primary.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(5)
                   ),
                   // width: 120,
@@ -1789,15 +1800,16 @@ Future<void> getAddress()async {
             ),
             SizedBox(height: 10),
             ElevatedButton(onPressed: () {
-              if(pinCodeController.text.isNotEmpty){
+              if(pinCodeController.text.isNotEmpty) {
                 GetLeadsPinData();
                 Navigator.pop(context);
               }else{
                 Fluttertoast.showToast(msg: 'Please Enter Pin code');
               }
-            },
-                style: ElevatedButton.styleFrom(backgroundColor: colors.primary),
-                child:Text('Done',style: TextStyle(color: colors.whiteTemp)))
+            }, style: ElevatedButton.styleFrom(backgroundColor: colors.primary),
+                child:Text('Done',style: TextStyle(color: colors.whiteTemp),
+                ),
+            ),
           ],
         );
       },

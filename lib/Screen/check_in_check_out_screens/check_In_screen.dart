@@ -19,6 +19,7 @@ import 'package:omega_employee_management/Screen/Auth_view/Login.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Helper/Session.dart';
+import '../../model_all_response/checkinout_model.dart';
 import '../../model_all_response/get_leads_model.dart';
 import '../dashboard/Dashboard.dart';
 import 'package:http/http.dart'as http;
@@ -37,10 +38,13 @@ class _CheckInScreenState extends State<CheckInScreen> {
   bool isLoading = false;
   var pinController = TextEditingController();
   var currentAddress = TextEditingController();
+
   TextEditingController nameCtr = TextEditingController();
   TextEditingController mobileCtr = TextEditingController();
   TextEditingController dateCtr = TextEditingController();
+  TextEditingController amountCtr = TextEditingController();
   TextEditingController remarkCtr = TextEditingController();
+  TextEditingController ocupationCtr = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
   bool Check= true;
@@ -243,10 +247,11 @@ class _CheckInScreenState extends State<CheckInScreen> {
   }
 
  bool? iLoading = false;
-  addFeedbacks() async{
+  addFeedbacks() async {
     setState(() {
       iLoading = true;
     });
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? leadId = prefs.getString('lead_id');
     String? uids = prefs.getString('new_user_id');
@@ -267,7 +272,9 @@ class _CheckInScreenState extends State<CheckInScreen> {
       'code': '${codeValue}',
       'code_type': "${escValue}",
       'next_date': '${dateController.text}',
-      'remark': '${remarkCtr.text}'
+      'remark': '${remarkCtr.text}',
+      'occupation': '${ocupationCtr.text}',
+      'amount': '${amountCtr.text}'
     });
     print('--------Fieldssssss------${request.fields}');
     imgFile == null ? null : request.files.add(await http.MultipartFile.fromPath(
@@ -290,6 +297,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
        print("final reslutttt nowwww${finalResult}");
        Fluttertoast.showToast(msg: "${finalResult['message']}");
        Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+      await CheckOut();
     }
     else {
       print(response.reasonPhrase);
@@ -313,11 +321,11 @@ class _CheckInScreenState extends State<CheckInScreen> {
   final List<String> items4 = [
     'Avaliable',
     'Not Avaliable',
-    'thiredparty'
+    'thirdparty'
   ];
 
   final List<String> items5 = [
-  'Re-vinit',
+  'Re-visit',
     'PTP',
     'BPTP',
     'RTP',
@@ -327,12 +335,14 @@ class _CheckInScreenState extends State<CheckInScreen> {
     'SHIFTED',
     'PTPRB',
     'STABRB',
+    "PARTPAYMENT",
+    "FUNDING"
   ];
 
   final List<String> items6 = [
     'ECS',
     'ONLINE',
-    'CASH'
+    'CASH',
   ];
 
   bool isVisible = false;
@@ -369,7 +379,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                   )
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             TextFormField(
               maxLength: 10,
               onTap: () {
@@ -380,18 +390,17 @@ class _CheckInScreenState extends State<CheckInScreen> {
               controller: mobileCtr,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  hintText: 'Enter Mobile No.',
+                  hintText: 'Enter Number',
                   contentPadding: EdgeInsets.only(top: 5,left: 10),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5)
-                  ),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(onPressed: (){
+            ElevatedButton(
+                onPressed: () {
               Navigator.pop(context);
             },style: ElevatedButton.styleFrom(backgroundColor: colors.primary),
-                child:Text('Submit Feedbacks',style: TextStyle(color: colors.whiteTemp),))
+                child:Text('Submit Feedbacks',style: TextStyle(color: colors.whiteTemp)))
           ],
         );
       },
@@ -452,19 +461,19 @@ class _CheckInScreenState extends State<CheckInScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height/0.8,
+          height: MediaQuery.of(context).size.height/0.7,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Check==false?Text('Feedbacks',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),):SizedBox.shrink(),
-              SizedBox(height: 10,),
+              Check==false? Text('Feedbacks',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),):SizedBox.shrink(),
+              SizedBox(height: 10),
              Row(
                children: [
                  Card(
                    elevation: 4,
                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                    child:
-                   DropdownButtonHideUnderline(
+                    DropdownButtonHideUnderline(
                      child: DropdownButton2<String>(
                        isExpanded: true,
                        hint: Text(
@@ -474,8 +483,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                            color: Theme.of(context).hintColor,
                          ),
                        ),
-                       items: items
-                           .map((String item) => DropdownMenuItem<String>(
+                       items: items.map((String item) => DropdownMenuItem<String>(
                          value: item,
                          child: Text(
                            item,
@@ -483,8 +491,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                              fontSize: 14,
                            ),
                          ),
-                       ))
-                           .toList(),
+                       )).toList(),
                        value: addressValue,
                        onChanged: (String? value) {
                          setState(() {
@@ -617,7 +624,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                              setState(() {
                                print("vehicle type is ${vehicleValue}");
                                vehicleValue = value;
-                               if(vehicleValue == 'thiredparty' ) {
+                               if(vehicleValue == 'thirdparty' ) {
                                  showAlertDialog(
                                    context,
                                    '',
@@ -672,8 +679,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
                           setState(() {
                             codeValue = value;
                             print('customer valuee ${codeValue}');
-                            if(codeValue == "STAB" || codeValue == "RB" || codeValue == "NORM"){
-                              print("working in this codeeee${codeValue == "STAB" || codeValue == "RB" || codeValue == "NORM"}");
+                            if(codeValue == "STAB" || codeValue == "RB" || codeValue == "NORM" || codeValue == "STABRB" || codeValue == "PARTPAYMENT" || codeValue == "FUNDING"){
+                              print("working in this codeeee ${codeValue == "STAB" || codeValue == "RB" || codeValue == "NORM"}");
                              setState(() {
                                isVisible = true;
                                print("visisble ${isVisible}");
@@ -730,8 +737,34 @@ class _CheckInScreenState extends State<CheckInScreen> {
               ),
               if(isVisible == true)
                 stabDroupDown(),
-               SizedBox(height: 10,),
+               SizedBox(height: 10),
               Container(
+                height: 65,
+                width: MediaQuery.of(context).size.width/1.1,
+                child: Card(
+                  elevation: 5,
+                  child: TextFormField(
+                    maxLines:null,
+                    onTap: () {
+                      setState(() {
+                      });
+                    },
+                    controller: amountCtr,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Amount',
+                      counterText: '',
+                      hintStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(top: 5,left: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+               Container(
                 height: 250,
                 width: MediaQuery.of(context).size.width/1.1,
                 child: Card(
@@ -758,6 +791,30 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 ),
               ),
               SizedBox(height: 10,),
+              Container(
+                height: 70,
+                width: MediaQuery.of(context).size.width/1.1,
+                child: Card(
+                  elevation: 5,
+                  child: TextFormField(
+                    maxLines:null,
+                    onTap: () {
+                      setState(() {
+                      });
+                    },
+                    controller: ocupationCtr,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Occupation',
+                      counterText: '',
+                      hintStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(top: 5, left: 10),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
               uploadMultiImage(),
               SizedBox(height: 20),
               ElevatedButton(
@@ -766,17 +823,15 @@ class _CheckInScreenState extends State<CheckInScreen> {
                    Color(0xff004276)
                  ),
                   onPressed: () {
-
                    if(addressValue == null || addressValue == ""
                    || customerValue == null || customerValue == "" || familymemberValue == null || familymemberValue == "" ||
                        vehicleValue == null || vehicleValue == "" || codeValue == null || codeValue == "" ||  dateController.text.length == 0
-                   || remarkCtr.text.length == 0 || imgFile == null || imgFile == ""
+                   || remarkCtr.text.length == 0 || ocupationCtr.text.length == 0 || amountCtr.text.length == 0 || imgFile == null || imgFile == ""
                    ) {
                      Fluttertoast.showToast(msg: "Please Fill All Fields");
                    }
                     else {
-                     addFeedbacks();///shivi
-
+                     addFeedbacks();///feedbacks
                    };
                   }, child: Text("Submit")),
               SizedBox(height: 10),
@@ -787,9 +842,45 @@ class _CheckInScreenState extends State<CheckInScreen> {
     );
   }
 
+  bool? errorMassage2;
+  Future<void> CheckOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uids = prefs.getString('new_user_id');
+    var headers = {
+      'Cookie': 'ci_session=ebec56d32bab8f418215d9b9a59c49312fa7206c'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}checkoutNow'));
+
+    request.fields.addAll({
+      'checkout_latitude': '${latitude}',
+      'checkout_longitude': '${longitude}',
+      'address': '${currentAddress.text}',
+      'user_id': '${uids}'
+    });
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var Result = await response.stream.bytesToString();
+      final finalResult = CheckInOutModel.fromJson(json.decode(Result));
+
+      setState(() {
+        errorMassage2 = finalResult.data.error;
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
+      Fluttertoast.showToast(msg:'${finalResult.data.msg}');
+
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
   String _dateValue = '';
   var dateFormate;
   TimeOfDay? _selectedTime;
+
   String convertDateTimeDisplay(String date)  {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     final DateFormat serverFormater = DateFormat('yyyy-MM-dd');
@@ -797,6 +888,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
     final String formatted = serverFormater.format(displayDate);
     return formatted;
   }
+
   Future _selectDateStart() async {
     DateTime? picked = await showDatePicker(
         context: context,
@@ -812,9 +904,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 accentColor: Colors.black,
                 colorScheme:  ColorScheme.light(primary:  colors.primary),
                 // ColorScheme.light(primary: const Color(0xFFEB6C67)),
-                buttonTheme:
-                ButtonThemeData(textTheme: ButtonTextTheme.accent)),
-            child: child!,
+                buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent)),
+                child: child!,
           );
         });
     if (picked != null)
@@ -881,7 +972,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
         ),
         imgFile == null || imgFile == "" ? Container():
         Container(
-          height: MediaQuery.of(context).size.height/3,
+          height: MediaQuery.of(context).size.height/4,
           child: Image.file(imgFile!),
         ),
         // Visibility(

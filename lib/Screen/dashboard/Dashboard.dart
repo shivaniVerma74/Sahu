@@ -286,7 +286,6 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       // ],
       backgroundColor:colors.whiteTemp,
     );
-
   }
 
   Widget _getBottomBar() {
@@ -432,8 +431,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
                         imagePath + "profile.svg",
                         color: colors.primary,
                       ),
-                text:
-                    _selBottom == 2 ? getTranslated(context, 'MY_PROFILE_LBL') : null,
+                text: _selBottom == 2 ? getTranslated(context, 'MY_PROFILE_LBL') : null,
               ),
             ],
             indicator: UnderlineTabIndicator(
@@ -443,7 +441,8 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
             labelColor: colors.primary,
             labelStyle: TextStyle(fontSize: 8 , fontWeight: FontWeight.w600),
           ),
-        ));
+        ),
+    );
   }
 
   @override

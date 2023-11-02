@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -213,10 +214,9 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
       var Result = await response.stream.bytesToString();
       final finalResult = CheckInOutModel.fromJson(json.decode(Result));
       errorMassage2 = finalResult.data.error;
-      if(errorMassage2==false){
+      if(errorMassage2 == false) {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> CheckOutScreen()));
       }else{
-
         Fluttertoast.showToast(msg:'${finalResult.data.msg}');
       }
     }
@@ -225,11 +225,84 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
     }
   }
 
+  _callNumber(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber1(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+
+  _callNumber2(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+
+  _callNumber3(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber4(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber5(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber6(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber7(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber8(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+  _callNumber9(String? mobileNumber) async {
+    var number = "${mobileNumber}";
+    print("numberrrrr ${number}");
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+    print("mobileee ${res}");
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         backgroundColor: colors.primary,
         centerTitle: true,
         elevation: 0,
@@ -341,7 +414,6 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                               SizedBox(height: 10,),
                               Container(
                                   height: 10,
-
                                   child: Text("Primary Address", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),)),
                               SizedBox(height: 10,),
                               Text("Primary Address Lm", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp),),
@@ -390,77 +462,109 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(height: 10,),
                               Text("${widget.model?.bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Text("${widget.model?.customername}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                               SizedBox(height: 5),
                               Text("${widget.model?.bomBkt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
                               SizedBox(height:10),
-                              Text("${widget.model?.caller}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.caller}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height:10),
-                              Text("${widget.model?.agreementid}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.agreementid}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.totalCharges}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.totalCharges}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.emiAmt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.emiAmt}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 15),
                               Container(
                                   width: 100,
                                   child: Text("${widget.model?.bktGrp}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp), maxLines: 2,)),
                               SizedBox(height: 15),
-                              Text("${widget.model?.phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              InkWell(
+                                  onTap: () {
+                                    _callNumber(widget.model?.phone1.toString());
+                                  },
+                                  child: Text("${widget.model?.phone1}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),)),
                               SizedBox(height: 10),
-                              Container(
-                                  width: 170,
-                                  child: Text("${widget.model?.phone2}",maxLines: 1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp,overflow: TextOverflow.ellipsis),)),
+                              InkWell(
+                                onTap: () {
+                                  _callNumber1(widget.model?.phone2.toString());
+                                },
+                                child: Container(
+                                    width: 170,
+                                    child: Text("${widget.model?.phone2}",maxLines: 1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp,overflow: TextOverflow.ellipsis),)),
+                              ),
                               SizedBox(height: 15),
-                              Container(
-                                  width: 170,
-                                  child: Text("${widget.model?.phone3}",maxLines: 1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp,overflow: TextOverflow.ellipsis),)),
+                              InkWell(
+                                onTap: () {
+                                  _callNumber2(widget.model?.phone3.toString());
+                                },
+                                child: Container(
+                                    width: 170,
+                                    child: Text("${widget.model?.phone3}",maxLines: 1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp,overflow: TextOverflow.ellipsis),)),
+                              ),
                               SizedBox(height: 10),
-                              Text("${widget.model?.phone4}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              InkWell(
+                                onTap: () {
+                                  _callNumber3(widget.model?.phone4.toString());
+                                },
+                                  child: Text("${widget.model?.phone4}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp))),
                               SizedBox(height: 5),
-                              Text("${widget.model?.fos}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                              SizedBox(height:10),
-                              Text("${widget.model?.reference1Name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.fos}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
+                              SizedBox(height:15),
+                              Text("${widget.model?.reference1Name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.reference2Name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.reference2Name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.ref1Contact}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              InkWell(
+                                onTap: () {
+                                  _callNumber4(widget.model?.ref1Contact.toString());
+                                },
+                                  child: Text("${widget.model?.ref1Contact}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp))),
                               SizedBox(height: 10),
-                              Text("${widget.model?.ref2Contact}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              InkWell(
+                                  onTap: () {
+                                    _callNumber5(widget.model?.ref2Contact.toString());
+                                  },
+                                  child: Text("${widget.model?.ref2Contact}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp))),
                               SizedBox(height: 10),
-                              Text("${widget.model?.nomineeName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.nomineeName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.nomineeNo}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              InkWell(
+                                  onTap: () {
+                                    _callNumber6(widget.model?.nomineeNo.toString());
+                                  },
+                                  child: Text("${widget.model?.nomineeNo}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp))),
                               SizedBox(height: 10),
-                              Text("${widget.model?.lmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+
+                              Text("${widget.model?.lmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.lmRemarks}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.lmRemarks}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.sdlm}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.sdlm}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 5),
-                              Text("${widget.model?.sdlmMode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.sdlmMode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.slmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.slmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.tlmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.tlmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.flmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.flmCode}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.allocation}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.allocation}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.allocationDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.allocationDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.lmAgency}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.lmAgency}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.segment}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.segment}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.emiStartDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.emiStartDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.emiEndDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.emiEndDate}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
-                              Text("${widget.model?.product}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                              Text("${widget.model?.product}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),
                               Text("${widget.model?.custCatg}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
                               SizedBox(height: 10),

@@ -1,6 +1,6 @@
 /// error : false
 /// message : "All Feedback data !!"
-/// data : [{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"15","address":"not avaliable","customer":"avaliable","family_member":"not avaliable","vechile":"thiredparty","name":"shivani","mobile":"9090909090","user_id":"420","lead_id":"630","image":"1690627380_Arpit_adhar.jpg","code":"STAB","code_type":"esc","next_date":"2023-07-30","remark":"minimum 100 char...","created_at":"2023-07-29 16:13:00","updated_at":"2023-07-29 16:13:00","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"14","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690627089_541340688769b88e9ac01673fb224328.jpg","code":"STAB","code_type":"cash","next_date":"2023-07-31","remark":"akjshd","created_at":"2023-07-29 16:08:09","updated_at":"2023-07-29 16:08:09","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"13","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690627079_541340688769b88e9ac01673fb224328.jpg","code":"STAB","code_type":"STAB","next_date":"2023-07-31","remark":"akjshd","created_at":"2023-07-29 16:07:59","updated_at":"2023-07-29 16:07:59","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"12","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690627051_541340688769b88e9ac01673fb224328.jpg","code":"STAB","code_type":"STAB","next_date":"2023-07-31","remark":"akjshd","created_at":"2023-07-29 16:07:31","updated_at":"2023-07-29 16:07:31","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"11","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690625450_541340688769b88e9ac01673fb224328.jpg","code":"RTP","code_type":null,"next_date":"2023-07-31","remark":"akjshd","created_at":"2023-07-29 15:40:50","updated_at":"2023-07-29 15:40:50","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"10","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690625429_541340688769b88e9ac01673fb224328.jpg","code":"RTP","code_type":null,"next_date":"2023-07-31","remark":"akjshd","created_at":"2023-07-29 15:40:29","updated_at":"2023-07-29 15:40:29","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"9","address":"not avaliable","customer":"avaliable","family_member":"not avaliable","vechile":"thiredparty","name":"shivani","mobile":"9090909090","user_id":"420","lead_id":"630","image":"1690624927_Arpit_adhar.jpg","code":"STAB","code_type":null,"next_date":"2023-07-30","remark":"minimum 100 char...","created_at":"2023-07-29 15:32:07","updated_at":"2023-07-29 15:32:07","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"8","address":"not avaliable","customer":"avaliable","family_member":"not avaliable","vechile":"thiredparty","name":"shivani","mobile":"9090909090","user_id":"420","lead_id":"630","image":"1690624916_Arpit_adhar.jpg","code":"STAB","code_type":null,"next_date":"2023-07-30","remark":"minimum 100 char...","created_at":"2023-07-29 15:31:56","updated_at":"2023-07-29 15:31:56","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"7","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"1690624556_541340688769b88e9ac01673fb224328.jpg","code":"RTP","code_type":null,"next_date":"2023-07-11","remark":"akjshd","created_at":"2023-07-29 15:25:56","updated_at":"2023-07-29 15:25:56","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"6","address":"not avaliable","customer":"avaliable","family_member":"not avaliable","vechile":"thiredparty","name":"shivani","mobile":"9090909090","user_id":"420","lead_id":"630","image":"Arpit_adhar.jpg","code":"STAB","code_type":null,"next_date":"2023-07-30","remark":"minimum 100 char...","created_at":"2023-07-29 15:16:30","updated_at":"2023-07-29 15:16:30","username":"Ajay"},{"bank_name":"L&T TW WHEELER","agreementid":"T10959160720041057","customername":"TASLIMA  BIBI","id":"5","address":"not available","customer":"not available","family_member":"available","vechile":"thiredparty","name":"vivek","mobile":"1234567890","user_id":"420","lead_id":"630","image":"541340688769b88e9ac01673fb224328.jpg","code":"RTP","code_type":null,"next_date":"2023-07-11","remark":"akjshd","created_at":"2023-07-29 14:01:36","updated_at":"2023-07-29 14:01:36","username":"Ajay"}]
+/// data : [{"bank_name":"L&T CL","agreementid":"C021100401020303","customername":"KOHINUR  MONDAL","id":"106","address":"Avaliable","customer":"Not Avaliable","family_member":"Not Avaliable","vechile":"thirdparty","name":null,"mobile":null,"user_id":"498","lead_id":"10459","image":"https://alphawizzserver.com/sahu/uploads/feedback_image/1698244323_6d505d87-76c4-4f9a-a32e-7af871f7ef381004425600696824397.jpg","code":"NORM","code_type":"ONLINE","next_date":"2023-10-27","remark":"vjjhcjcchch","occupation":"","amount":"","created_at":"2023-10-25 20:02:03","updated_at":"2023-10-25 20:02:03","username":"Mithun Baulia"},{"bank_name":"L&T CL","agreementid":"C021100401020303","customername":"KOHINUR  MONDAL","id":"105","address":"Avaliable","customer":"Avaliable","family_member":"Not Avaliable","vechile":"thiredparty","name":"Testing","mobile":"Nregavs","user_id":"498","lead_id":"10459","image":"https://alphawizzserver.com/sahu/uploads/feedback_image/1698240773_27f04a41-b5a7-4640-bf72-53227f5491d87628835913135337625.jpg","code":"NORM","code_type":"CASH","next_date":"2023-10-28","remark":"New Remark","occupation":"","amount":"","created_at":"2023-10-25 19:02:53","updated_at":"2023-10-25 19:02:53","username":"Mithun Baulia"},{"bank_name":"L&T CL","agreementid":"C021100401020303","customername":"KOHINUR  MONDAL","id":"104","address":"Avaliable","customer":"Avaliable","family_member":"Not Avaliable","vechile":"thiredparty","name":"New Name","mobile":"newwww","user_id":"498","lead_id":"10459","image":"https://alphawizzserver.com/sahu/uploads/feedback_image/1698236035_b2c68727-a9d3-458b-92bb-1f5d7fa06e6d6119131356919777938.jpg","code":"BKT","code_type":null,"next_date":"2023-10-27","remark":"cycgchchchh","occupation":"","amount":"","created_at":"2023-10-25 17:43:55","updated_at":"2023-10-25 17:43:55","username":"Mithun Baulia"},{"bank_name":"L&T CL","agreementid":"C021100401020303","customername":"KOHINUR  MONDAL","id":"103","address":"Avaliable","customer":"Avaliable","family_member":"Not Avaliable","vechile":"Not Avaliable","name":null,"mobile":null,"user_id":"498","lead_id":"10459","image":"https://alphawizzserver.com/sahu/uploads/feedback_image/1698217676_e14d3091-2569-4c98-9d31-d9fb81f543e43085564278008590077.jpg","code":"RTP","code_type":null,"next_date":"2023-10-25","remark":"neeewww","occupation":"","amount":"","created_at":"2023-10-25 12:37:56","updated_at":"2023-10-25 12:37:56","username":"Mithun Baulia"}]
 
 class GetfaadbackModel {
   GetfaadbackModel({
@@ -48,26 +48,28 @@ GetfaadbackModel copyWith({  bool? error,
 
 }
 
-/// bank_name : "L&T TW WHEELER"
-/// agreementid : "T10959160720041057"
-/// customername : "TASLIMA  BIBI"
-/// id : "15"
-/// address : "not avaliable"
-/// customer : "avaliable"
-/// family_member : "not avaliable"
-/// vechile : "thiredparty"
-/// name : "shivani"
-/// mobile : "9090909090"
-/// user_id : "420"
-/// lead_id : "630"
-/// image : "1690627380_Arpit_adhar.jpg"
-/// code : "STAB"
-/// code_type : "esc"
-/// next_date : "2023-07-30"
-/// remark : "minimum 100 char..."
-/// created_at : "2023-07-29 16:13:00"
-/// updated_at : "2023-07-29 16:13:00"
-/// username : "Ajay"
+/// bank_name : "L&T CL"
+/// agreementid : "C021100401020303"
+/// customername : "KOHINUR  MONDAL"
+/// id : "106"
+/// address : "Avaliable"
+/// customer : "Not Avaliable"
+/// family_member : "Not Avaliable"
+/// vechile : "thirdparty"
+/// name : null
+/// mobile : null
+/// user_id : "498"
+/// lead_id : "10459"
+/// image : "https://alphawizzserver.com/sahu/uploads/feedback_image/1698244323_6d505d87-76c4-4f9a-a32e-7af871f7ef381004425600696824397.jpg"
+/// code : "NORM"
+/// code_type : "ONLINE"
+/// next_date : "2023-10-27"
+/// remark : "vjjhcjcchch"
+/// occupation : ""
+/// amount : ""
+/// created_at : "2023-10-25 20:02:03"
+/// updated_at : "2023-10-25 20:02:03"
+/// username : "Mithun Baulia"
 
 class Data {
   Data({
@@ -79,8 +81,8 @@ class Data {
       String? customer, 
       String? familyMember, 
       String? vechile, 
-      String? name, 
-      String? mobile, 
+      dynamic name, 
+      dynamic mobile, 
       String? userId, 
       String? leadId, 
       String? image, 
@@ -88,6 +90,8 @@ class Data {
       String? codeType, 
       String? nextDate, 
       String? remark, 
+      String? occupation, 
+      String? amount, 
       String? createdAt, 
       String? updatedAt, 
       String? username,}){
@@ -108,6 +112,8 @@ class Data {
     _codeType = codeType;
     _nextDate = nextDate;
     _remark = remark;
+    _occupation = occupation;
+    _amount = amount;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
     _username = username;
@@ -131,6 +137,8 @@ class Data {
     _codeType = json['code_type'];
     _nextDate = json['next_date'];
     _remark = json['remark'];
+    _occupation = json['occupation'];
+    _amount = json['amount'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _username = json['username'];
@@ -143,8 +151,8 @@ class Data {
   String? _customer;
   String? _familyMember;
   String? _vechile;
-  String? _name;
-  String? _mobile;
+  dynamic _name;
+  dynamic _mobile;
   String? _userId;
   String? _leadId;
   String? _image;
@@ -152,6 +160,8 @@ class Data {
   String? _codeType;
   String? _nextDate;
   String? _remark;
+  String? _occupation;
+  String? _amount;
   String? _createdAt;
   String? _updatedAt;
   String? _username;
@@ -163,8 +173,8 @@ Data copyWith({  String? bankName,
   String? customer,
   String? familyMember,
   String? vechile,
-  String? name,
-  String? mobile,
+  dynamic name,
+  dynamic mobile,
   String? userId,
   String? leadId,
   String? image,
@@ -172,6 +182,8 @@ Data copyWith({  String? bankName,
   String? codeType,
   String? nextDate,
   String? remark,
+  String? occupation,
+  String? amount,
   String? createdAt,
   String? updatedAt,
   String? username,
@@ -192,6 +204,8 @@ Data copyWith({  String? bankName,
   codeType: codeType ?? _codeType,
   nextDate: nextDate ?? _nextDate,
   remark: remark ?? _remark,
+  occupation: occupation ?? _occupation,
+  amount: amount ?? _amount,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
   username: username ?? _username,
@@ -204,8 +218,8 @@ Data copyWith({  String? bankName,
   String? get customer => _customer;
   String? get familyMember => _familyMember;
   String? get vechile => _vechile;
-  String? get name => _name;
-  String? get mobile => _mobile;
+  dynamic get name => _name;
+  dynamic get mobile => _mobile;
   String? get userId => _userId;
   String? get leadId => _leadId;
   String? get image => _image;
@@ -213,6 +227,8 @@ Data copyWith({  String? bankName,
   String? get codeType => _codeType;
   String? get nextDate => _nextDate;
   String? get remark => _remark;
+  String? get occupation => _occupation;
+  String? get amount => _amount;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
   String? get username => _username;
@@ -236,6 +252,8 @@ Data copyWith({  String? bankName,
     map['code_type'] = _codeType;
     map['next_date'] = _nextDate;
     map['remark'] = _remark;
+    map['occupation'] = _occupation;
+    map['amount'] = _amount;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     map['username'] = _username;
