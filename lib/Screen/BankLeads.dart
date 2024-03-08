@@ -25,10 +25,11 @@ class _BankLeadsState extends State<BankLeads> {
     // TODO: implement initState
     super.initState();
     getLeads();
+
   }
 
   GetLeadsModel? getLeadData;
-  List <LeadsData> leadData = [];
+  List<LeadsData> leadData = [];
   bool isLoading = true;
 
   getLeads() async {
@@ -56,7 +57,7 @@ class _BankLeadsState extends State<BankLeads> {
         getLeadData = finalResult;
         leadData = getLeadData?.data ?? [];
       });
-      print("get leadsss datata${leadData}");
+      // print("get leadsss datata${}");
       setState(() {
         isLoading=false;
       });
@@ -143,6 +144,7 @@ class _BankLeadsState extends State<BankLeads> {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
+                                  print("lklkkkl${getLeadData!.data![index].id}");
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => AllLeadsDetails(model: getLeadData!.data![index])));
                                 },
                                 child: Padding(

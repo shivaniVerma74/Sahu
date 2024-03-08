@@ -26,7 +26,8 @@ import 'package:http/http.dart'as http;
 
 class CheckInScreen extends StatefulWidget {
   LeadsData? model;
-  CheckInScreen({Key? key, this.model}) : super(key: key);
+  String? leadId;
+  CheckInScreen({Key? key, this.model, this.leadId}) : super(key: key);
 
   @override
   State<CheckInScreen> createState() => _CheckInScreenState();
@@ -69,10 +70,10 @@ class _CheckInScreenState extends State<CheckInScreen> {
     request.fields.addAll({
       'checkin_latitude': '${latitude}',
       'checkin_longitude': '${longitude}',
-      'address': '${currentAddress}',
+      'address': '${currentAddress.text}',
       'user_id': '${uids}'
     });
-
+   print("check in parameter ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -80,7 +81,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
       final finalResponse = CheckInModel.fromJson(json.decode(Response));
       errormsg = finalResponse.data.error;
       Fluttertoast.showToast(msg:'${finalResponse.data.msg}');
-      print('kkkkkkkkkkkkkkkkkk${finalResponse.data.msg}');
+      print('kkkkkkkkk ${finalResponse.data.msg}');
       setState(() {
         Check=false;
       });
@@ -90,7 +91,57 @@ class _CheckInScreenState extends State<CheckInScreen> {
     }
   }
 
+  // Future<void> getCurrentLoc() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     print("checking permission here ${permission}");
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   }
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //  // var loc = Provider.of<LocationProvider>(context, listen: false);
+  //
+  //   latitude = position.latitude.toString();
+  //   longitude = position.longitude.toString();
+  //   List<Placemark> placemark = await placemarkFromCoordinates(
+  //       double.parse(latitude!), double.parse(longitude!),
+  //       localeIdentifier: "en");
+  //
+  //   pinController.text = placemark[0].postalCode!;
+  //   if (mounted) {
+  //     setState(() {
+  //       pinController.text = placemark[0].postalCode!;
+  //       currentAddress.text =
+  //           "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
+  //       latitude = position.latitude.toString();
+  //       longitude = position.longitude.toString();
+  //      // loc.lng = position.longitude.toString();
+  //       //loc.lat = position.latitude.toString();
+  //       print('=============${latitude}');
+  //       print('Longitude*************${longitude}');
+  //       print('Current Addresssssss${currentAddress.text}');
+  //       getLatLong();
+  //       CheckInNow();
+  //
+  //     });
+  //
+  //     if (currentAddress.text == "" || currentAddress.text == null) {
+  //     } else {
+  //      Fluttertoast.showToast(msg:"Check In Successfully");
+  //     }
+  //   }
+  // }
+
+  var currentlocation_Global;
+  var longitude_Global;
+  var lattitudee_Global;
+
   Future<void> getCurrentLoc() async {
+    print("workingggg===========");
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -100,41 +151,44 @@ class _CheckInScreenState extends State<CheckInScreen> {
         return Future.error('Location Not Available');
       }
     }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-   // var loc = Provider.of<LocationProvider>(context, listen: false);
-
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // var loc = Provider.of<LocationProvider>(context, listen: false);
     latitude = position.latitude.toString();
     longitude = position.longitude.toString();
+    setState(() {
+      longitude_Global=latitude;
+      lattitudee_Global=longitude;
+    });
+
     List<Placemark> placemark = await placemarkFromCoordinates(
         double.parse(latitude!), double.parse(longitude!),
         localeIdentifier: "en");
-
     pinController.text = placemark[0].postalCode!;
     if (mounted) {
-      setState(() {
+      setState(()  {
         pinController.text = placemark[0].postalCode!;
         currentAddress.text =
-            "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
+        "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
         latitude = position.latitude.toString();
         longitude = position.longitude.toString();
-       // loc.lng = position.longitude.toString();
+        // loc.lng = position.longitude.toString();
         //loc.lat = position.latitude.toString();
-        print('=============${latitude}');
+        setState(() {
+          currentlocation_Global=currentAddress.text.toString();
+        });
+         CheckInNow();
+        print('Latitude=============${latitude}');
         print('Longitude*************${longitude}');
         print('Current Addresssssss${currentAddress.text}');
-        getLatLong();
-        CheckInNow();
-
       });
-
       if (currentAddress.text == "" || currentAddress.text == null) {
       } else {
-       Fluttertoast.showToast(msg:"Check In Successfully");
+        setState(() {
+          // navigateToPage();
+        });
       }
     }
   }
-
 
   Future<void> getLatLong() async {
     SharedPreferences preferences= await SharedPreferences.getInstance();
@@ -162,7 +216,9 @@ class _CheckInScreenState extends State<CheckInScreen> {
     // TODO: implement initState
     super.initState();
     myLeadId();
+    print("jkjkjktttt ${widget.leadId}");
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,10 +280,12 @@ class _CheckInScreenState extends State<CheckInScreen> {
                     borderRadius: BorderRadius.circular(30)),
                 child: ElevatedButton(onPressed: (){
                   getCurrentLoc();
+                  print("kjkhjkhdsssfsjk");
                 },style: ElevatedButton.styleFrom(backgroundColor:colors.primary), child:Text('Check In Now '))
             ),
             SizedBox(height: 30,),
-            Check==false?Container(
+            Check==false?
+            Container(
                // height: MediaQuery.of(context).size.height/1.5,
               width: MediaQuery.of(context).size.width/1.1,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -238,8 +296,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
                     child: feedback(),
                   ),
               ),
-            ):SizedBox.shrink(),
-            SizedBox(height: 30,),
+            ): SizedBox.shrink(),
+            SizedBox(height: 30),
           ],
         ),
       ),
@@ -253,9 +311,9 @@ class _CheckInScreenState extends State<CheckInScreen> {
     });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? leadId = prefs.getString('lead_id');
+    // String? leadId = prefs.getString('lead_id');
     String? uids = prefs.getString('new_user_id');
-    print("111111111111111111111${leadId}");
+    // print("111111111111111111111${leadId}");
     var headers = {
       'Cookie': 'ci_session=ccfe390f27e667ad5443dcf152e62cb857c138d4'
     };
@@ -268,7 +326,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
       'name': '${nameCtr.text}',
       'mobile': '${mobileCtr.text}',
       'user_id': '${uids}',
-      'lead_id': lead_id.toString(),
+      'lead_id': widget.leadId.toString(),
+      // widget.model?.id ?? "",
       'code': '${codeValue}',
       'code_type': "${escValue}",
       'next_date': '${dateController.text}',
@@ -276,7 +335,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
       'occupation': '${ocupationCtr.text}',
       'amount': '${amountCtr.text}'
     });
-    print('--------Fieldssssss------${request.fields}');
+    print('-----sednd feedbacks parameteer------${request.fields}');
     imgFile == null ? null : request.files.add(await http.MultipartFile.fromPath(
         'image', "${imgFile!.path}"));
     print("imageee fileee in apiiiii ${imgFile!.path}");
@@ -294,7 +353,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
       print("workingggggg");
        var result = await response.stream.bytesToString();
        var finalResult = jsonDecode(result);
-       print("final reslutttt nowwww${finalResult}");
+       print("final reslutttt nowwww ${finalResult}");
        Fluttertoast.showToast(msg: "${finalResult['message']}");
        Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
       await CheckOut();
@@ -303,24 +362,25 @@ class _CheckInScreenState extends State<CheckInScreen> {
       print(response.reasonPhrase);
     }
   }
+
   final List<String> items = [
-    'Avaliable',
-    'Not Avaliable',
+    'Available',
+    'Not Available',
   ];
 
   final List<String> items2 = [
-    'Avaliable',
-    'Not Avaliable',
+    'Available',
+    'Not Available',
   ];
 
   final List<String> items3 = [
-    'Avaliable',
-    'Not Avaliable',
+    'Available',
+    'Not Available',
   ];
 
   final List<String> items4 = [
-    'Avaliable',
-    'Not Avaliable',
+    'Available',
+    'Not Available',
     'thirdparty'
   ];
 
@@ -469,46 +529,46 @@ class _CheckInScreenState extends State<CheckInScreen> {
               SizedBox(height: 10),
              Row(
                children: [
-                 Card(
-                   elevation: 4,
-                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                   child:
-                    DropdownButtonHideUnderline(
-                     child: DropdownButton2<String>(
-                       isExpanded: true,
-                       hint: Text(
-                         'Address',
-                         style: TextStyle(
-                           fontSize: 14,
-                           color: Theme.of(context).hintColor,
-                         ),
-                       ),
-                       items: items.map((String item) => DropdownMenuItem<String>(
-                         value: item,
-                         child: Text(
-                           item,
-                           style: const TextStyle(
+                   Card(
+                     elevation: 4,
+                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                     child:
+                      DropdownButtonHideUnderline(
+                       child: DropdownButton2<String>(
+                         isExpanded: true,
+                         hint: Text(
+                           'Address',
+                           style: TextStyle(
                              fontSize: 14,
+                             color: Theme.of(context).hintColor,
                            ),
                          ),
-                       )).toList(),
-                       value: addressValue,
-                       onChanged: (String? value) {
-                         setState(() {
-                           addressValue = value;
-                         });
-                       },
-                       buttonStyleData: const ButtonStyleData(
-                         padding: EdgeInsets.symmetric(horizontal: 16),
-                         height: 50,
-                         width: 140,
-                       ),
-                       menuItemStyleData: const MenuItemStyleData(
-                         height: 40,
+                         items: items.map((String item) => DropdownMenuItem<String>(
+                           value: item,
+                           child: Text(
+                             item,
+                             style: const TextStyle(
+                               fontSize: 14,
+                             ),
+                           ),
+                         )).toList(),
+                         value: addressValue,
+                         onChanged: (String? value) {
+                           setState(() {
+                             addressValue = value;
+                           });
+                         },
+                         buttonStyleData: const ButtonStyleData(
+                           padding: EdgeInsets.symmetric(horizontal: 16),
+                           height: 50,
+                           width: 140,
+                         ),
+                         menuItemStyleData: const MenuItemStyleData(
+                           height: 40,
+                         ),
                        ),
                      ),
                    ),
-                 ),
                  Card(
                    elevation: 4,
                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),

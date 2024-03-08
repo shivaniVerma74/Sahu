@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:omega_employee_management/Model/category_model.dart';
 import 'package:omega_employee_management/Screen/ReportsScreen.dart';
 import 'package:omega_employee_management/Screen/check_in_check_out_screens/check_In_screen.dart';
@@ -43,6 +44,7 @@ import '../AllLeadsDetails.dart';
 import '../Auth_view/Login.dart';
 import 'package:http/http.dart' as http;
 import '../BankLeads.dart';
+import '../FosCollection.dart';
 import '../check_in_check_out_screens/check_out_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -145,7 +147,6 @@ class _HomePageState extends State<HomePage>
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       var Result = await response.stream.bytesToString();
       final finalResult = CheckInModel.fromJson(json.decode(Result));
@@ -154,7 +155,7 @@ class _HomePageState extends State<HomePage>
         print('-------------errorr${errorMassage}');
         if(errorMassage==false){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckInScreen()));
-        }else{
+        } else {
           Fluttertoast.showToast(msg:'${finalResult.data.msg}');
         }
     }
@@ -287,6 +288,8 @@ Future<void> getAddress()async {
   @override
   void initState() {
     super.initState();
+    convertDateTimeDispla();
+    getTodayAmount();
     getStatus();
     getAddress();
     GetLeads();
@@ -338,6 +341,164 @@ Future<void> getAddress()async {
     }
   }
 
+  var dateFormate;
+  String? formattedDate;
+  String? timeData;
+
+  convertDateTimeDispla() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    formattedDate = formatter.format(now);
+    print("datedetet$formattedDate"); // 2016-01-25
+    timeData = DateFormat("hh:mm:ss a").format(DateTime.now());
+    print("timeeeeeeeeee$timeData");
+  }
+
+  String? todayAmount, todayMessage;
+  getTodayAmount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uids = prefs.getString('new_user_id');
+    var headers = {
+      'Cookie': 'ci_session=66a81baee62d9c6eab0f0eb8a336c7fceea8d415'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/get_received_amount'));
+    request.fields.addAll({
+      'user_id': '${uids}',
+      'date': '${formattedDate}',
+      'type': 'current'
+    });
+    print("gettoday amount para${request.fields}===========");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var finalResponse = await response.stream.bytesToString();
+      final jsonResponse = json.decode(finalResponse);
+      todayAmount = jsonResponse['amount'];
+      todayMessage = jsonResponse['message'];
+      print("=======today amonunt========${todayAmount} ${todayMessage}===========");
+      setState(() {});
+    }
+    else {
+    print(response.reasonPhrase);
+    }
+  }
+
+  TextEditingController amtCtr = TextEditingController();
+  TextEditingController remarksCtr = TextEditingController();
+
+  collectionDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            content: SizedBox(
+              height: 250,
+              width: 550,
+              child: Column(
+                children: [
+                  Container(
+                    // height: 180,
+                    // width: 250,
+                    // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: const Color(0xFF112c48), width: 2),
+                    //     borderRadius: BorderRadius.circular(16),
+                    // ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Container(
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: amtCtr,
+                            // textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Enter Amount',
+                              contentPadding: const EdgeInsets.all(10),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          child: TextField(
+
+                            controller: remarksCtr,
+                            // textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Enter Remarks',
+                              contentPadding: const EdgeInsets.all(10),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if(amtCtr.text== "" ||  amtCtr.text == null || remarksCtr.text == "" || remarksCtr.text == null){
+                              Fluttertoast.showToast(msg: "Pls Enter Fields");
+                            } else{
+                              fosCollection();
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 130,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: colors.primary),
+                            child: Center(child: Text("Save", style: TextStyle(fontSize: 15, color: Colors.white),)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+  fosCollection() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uids = prefs.getString('new_user_id');
+    var headers = {
+      'Cookie': 'ci_session=c2f6d65d231bb09a25b69b42d7f113f4f517913c'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/update_collection_amount'));
+    request.fields.addAll({
+      'fos_id': '${uids}',
+      'amount': '${amtCtr.text}',
+      'remarks': '${remarksCtr.text}',
+      'user_id': ''
+    });
+    print("=========fos add parameeter======${request.fields}===========");
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      Fluttertoast.showToast(msg: "Collection added successfully");
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -370,6 +531,7 @@ Future<void> getAddress()async {
               SizedBox(height: 10),
              Stack(
                children: [
+
                  _catList2(),
                  Padding(
                    padding: const EdgeInsets.only(left:10.0),
@@ -389,6 +551,58 @@ Future<void> getAddress()async {
                ],
              ),
               SizedBox(height: 10),
+              InkWell(
+                onTap: () {
+                  collectionDialog();
+                       // Navigator.push(context, MaterialPageRoute(builder: (context) => FosCollection()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left:10.0,right: 10,top:5),
+                  child: Card(
+                    elevation:5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 35,
+                          width: MediaQuery.of(context).size.width/1,
+                          decoration: BoxDecoration(
+                            color: colors.primary,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top:7.0),
+                            child: Text('Cash Collection',textAlign:TextAlign.center,style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: colors.whiteTemp),),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("${todayMessage}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color:colors.blackTemp),),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text("${todayAmount}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
               customTabbar(),
               SizedBox(height: 10),
               _currentIndex==1?
@@ -404,7 +618,8 @@ Future<void> getAddress()async {
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => BankLeads(bankModel: bankDetailsModel?.data[index])));
                         },
-                        child: Padding(
+                        child:
+                        Padding(
                           padding: const EdgeInsets.only(left:10.0,right: 10,top:5),
                           child: Card(
                             elevation:5,

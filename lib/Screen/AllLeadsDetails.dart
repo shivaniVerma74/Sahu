@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:omega_employee_management/Screen/dashboard/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Helper/Color.dart';
@@ -25,6 +28,8 @@ class AllLeadsDetails extends StatefulWidget {
   @override
   State<AllLeadsDetails> createState() => _AllLeadsDetailsState();
 }
+
+String? latitude, longitude, state, country;
 
 class _AllLeadsDetailsState extends State<AllLeadsDetails> {
 
@@ -59,6 +64,7 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
     getDistance();
     getStatus();
     getTodaysData();
+    print("id leaddf ${widget.model?.id}");
   }
 
   // GetLeadsModel? getLeadData;
@@ -160,13 +166,12 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
     };
     var request = http.MultipartRequest('POST', Uri.parse("${baseUrl}checkinNow"));
     request.fields.addAll({
-      'checkin_latitude': '${lat1}',
-      'checkin_longitude': '${long1}',
-      'address': '${address1}',
+      'checkin_latitude': '${latitude}',
+      'checkin_longitude': '${longitude}',
+      'address': '${currentAddress.text}',
       'user_id': '${CUR_USERID}'
-
     });
-
+    print("user checkin ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -175,7 +180,7 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
       errorMassage =finalResult.data.error;
       print('-------------errorr${errorMassage}');
       if(errorMassage==false){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> CheckInScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> CheckInScreen(leadId: widget.model!.id)));
       }else{
         Fluttertoast.showToast(msg:'${finalResult.data.msg}');
       }
@@ -184,6 +189,120 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
       print(response.reasonPhrase);
     }
   }
+
+  var currentlocation_Global;
+  var longitude_Global;
+  var lattitudee_Global;
+  var pinController = TextEditingController();
+  var currentAddress = TextEditingController();
+
+
+  var currentlocation_Global1;
+  var longitude_Global1;
+  var lattitudee_Global1;
+  var pinController1 = TextEditingController();
+  var currentAddress1 = TextEditingController();
+
+  Future<void> getCurrentLocCheckout() async {
+    print("workingggg===========");
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      print("checking permission here ${permission}");
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // var loc = Provider.of<LocationProvider>(context, listen: false);
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+    setState(() {
+      longitude_Global1=latitude;
+      lattitudee_Global1=longitude;
+    });
+
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(latitude!), double.parse(longitude!),
+        localeIdentifier: "en");
+    pinController1.text = placemark[0].postalCode!;
+    if (mounted) {
+      setState(() {
+        pinController1.text = placemark[0].postalCode!;
+        currentAddress1.text =
+        "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
+        latitude = position.latitude.toString();
+        longitude = position.longitude.toString();
+        // loc.lng = position.longitude.toString();
+        //loc.lat = position.latitude.toString();
+        setState(() {
+          currentlocation_Global1=currentAddress1.text.toString();
+        });
+        CheckOut();
+        print('Latitude=============${latitude}');
+        print('Longitude*************${longitude}');
+        print('Current Addresssssss${currentAddress1.text}');
+      });
+      if (currentAddress1.text == "" || currentAddress1.text == null) {
+      } else {
+        setState(() {
+          // navigateToPage();
+        });
+      }
+    }
+  }
+
+  Future<void> getCurrentLoc() async {
+    print("workingggg===========");
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      print("checking permission here ${permission}");
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // var loc = Provider.of<LocationProvider>(context, listen: false);
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+    setState(() {
+      longitude_Global=latitude;
+      lattitudee_Global=longitude;
+    });
+
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        double.parse(latitude!), double.parse(longitude!),
+        localeIdentifier: "en");
+    pinController.text = placemark[0].postalCode!;
+    if (mounted) {
+      setState(() {
+        pinController.text = placemark[0].postalCode!;
+        currentAddress.text =
+        "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
+        latitude = position.latitude.toString();
+        longitude = position.longitude.toString();
+        // loc.lng = position.longitude.toString();
+        //loc.lat = position.latitude.toString();
+        setState(() {
+          currentlocation_Global=currentAddress.text.toString();
+        });
+        getUserCheckIn();
+        print('Latitude=============${latitude}');
+        print('Longitude*************${longitude}');
+        print('Current Addresssssss${currentAddress.text}');
+      });
+      if (currentAddress.text == "" || currentAddress.text == null) {
+      } else {
+        setState(() {
+          // navigateToPage();
+        });
+      }
+    }
+  }
+
 
   bool? errorMassage2;
   Future<void> CheckOut()async {
@@ -201,24 +320,24 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
     var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}checkoutNow'));
 
     request.fields.addAll({
-      'checkout_latitude': '${lat2}',
-      'checkout_longitude': '${long2}',
-      'address': '${address2}',
+      'checkout_latitude': '${latitude}',
+      'checkout_longitude': '${longitude}',
+      'address': '${currentAddress1.text}',
       'user_id': '${CUR_USERID}'
     });
-    print('-----fields------${request.fields}');
+    print("user checkin ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       var Result = await response.stream.bytesToString();
       final finalResult = CheckInOutModel.fromJson(json.decode(Result));
-      errorMassage2 = finalResult.data.error;
-      if(errorMassage2 == false) {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> CheckOutScreen()));
-      }else{
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+      // errorMassage2 = finalResult.data.error;
+      // if(errorMassage2 == false) {
+      //   Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+      // }else{
         Fluttertoast.showToast(msg:'${finalResult.data.msg}');
-      }
+      // }
     }
     else {
       print(response.reasonPhrase);
@@ -659,7 +778,8 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                       children: [
                         InkWell(
                           onTap: () {
-                            getUserCheckIn();
+                            getCurrentLoc();
+                            // getUserCheckIn();
                           },
                           child: Container(
                             height:40,
@@ -677,7 +797,7 @@ class _AllLeadsDetailsState extends State<AllLeadsDetails> {
                         SizedBox(width: 10,),
                         InkWell(
                           onTap: () {
-                            CheckOut();
+                            getCurrentLocCheckout();
                           },
                           child: Container(
                             height:40,

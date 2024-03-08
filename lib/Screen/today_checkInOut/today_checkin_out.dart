@@ -74,7 +74,7 @@ class _TodayCheckInOutScreenState extends State<TodayCheckInOutScreen> {
         child: getUserCheckInOutModel?.error == true ?
         Padding(
           padding: const EdgeInsets.only(top: 250),
-          child: Center(child: Text("No check in for today", style: TextStyle(fontSize: 18, color: colors.primary, fontWeight: FontWeight.w600),)),
+          child: Center(child: Text("No check in for today", style: TextStyle(fontSize: 18, color: colors.primary, fontWeight: FontWeight.w600))),
         ):
         Column(
           children: [

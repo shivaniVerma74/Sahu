@@ -12,6 +12,7 @@ import 'package:omega_employee_management/Helper/String.dart';
 import 'package:omega_employee_management/Screen/check_in_check_out_screens/check_In_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../model_all_response/checkinout_model.dart';
+import '../Add_Address.dart';
 import '../dashboard/Dashboard.dart';
 import 'package:http/http.dart'as http;
 
@@ -28,6 +29,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? long2;
   String? lat1;
   String? long1;
+
+  @override
+  void initState() {
+    super.initState();
+   // getCurrentLoc();
+  }
 
   var pinController = TextEditingController();
   var currentAddress = TextEditingController();
@@ -60,16 +67,68 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   //
   // }
 
+  // Future<void> getCurrentLoc() async {
+  //   SharedPreferences preferences= await SharedPreferences.getInstance();
+  //   setState(() {
+  //     lat1 = preferences.getString('lattt');
+  //     long1 = preferences.getString('longg');
+  //     print('mmmmmmmmmmmmmmmmmm${long1}');
+  //     print("lllllllllllllllll${lat1}");
+  //
+  //   });
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     print("checking permission here ${permission}");
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   }
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   // var loc = Provider.of<LocationProvider>(context, listen: false);
+  //
+  //   lat2 = position.latitude.toString();
+  //   long2 = position.longitude.toString();
+  //   List<Placemark> placemark = await placemarkFromCoordinates(
+  //       double.parse(lat2!), double.parse(long2!),
+  //       localeIdentifier: "en");
+  //
+  //   pinController.text = placemark[0].postalCode!;
+  //   if (mounted) {
+  //     setState(() {
+  //       pinController.text = placemark[0].postalCode!;
+  //       currentAddress.text =
+  //       "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
+  //       lat2 = position.latitude.toString();
+  //       long2 = position.longitude.toString();
+  //       // loc.lng = position.longitude.toString();
+  //       //loc.lat = position.latitude.toString();
+  //
+  //       getLatLong2();
+  //       print('Current Addresssssss${currentAddress.text}');
+  //       setState(() {
+  //         calculateDistance(lat1, long1, lat2, long2);
+  //       });
+  //       CheckOut();
+  //     });
+  //
+  //     if (currentAddress.text == "" || currentAddress.text == null) {
+  //     } else {
+  //       setState(() {
+  //         navigateToPage();
+  //       });
+  //     }
+  //   }
+  // }
+
+  var currentlocation_Global;
+  var longitude_Global;
+  var lattitudee_Global;
+
   Future<void> getCurrentLoc() async {
-
-    SharedPreferences preferences= await SharedPreferences.getInstance();
-    setState(() {
-      lat1 = preferences.getString('lattt');
-      long1 = preferences.getString('longg');
-      print('mmmmmmmmmmmmmmmmmm${long1}');
-      print("lllllllllllllllll${lat1}");
-
-    });
+    print("workingggg===========");
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -79,39 +138,41 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         return Future.error('Location Not Available');
       }
     }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     // var loc = Provider.of<LocationProvider>(context, listen: false);
+    latitude = position.latitude.toString();
+    longitude = position.longitude.toString();
+    setState(() {
+      longitude_Global=latitude;
+      lattitudee_Global=longitude;
+    });
 
-    lat2 = position.latitude.toString();
-    long2 = position.longitude.toString();
     List<Placemark> placemark = await placemarkFromCoordinates(
-        double.parse(lat2!), double.parse(long2!),
+        double.parse(latitude!), double.parse(longitude!),
         localeIdentifier: "en");
-
     pinController.text = placemark[0].postalCode!;
     if (mounted) {
       setState(() {
         pinController.text = placemark[0].postalCode!;
         currentAddress.text =
         "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}";
-        lat2 = position.latitude.toString();
-        long2 = position.longitude.toString();
+        latitude = position.latitude.toString();
+        longitude = position.longitude.toString();
         // loc.lng = position.longitude.toString();
         //loc.lat = position.latitude.toString();
-
-        getLatLong2();
-        print('Current Addresssssss${currentAddress.text}');
         setState(() {
-          calculateDistance(lat1, long1, lat2, long2);
+          currentlocation_Global=currentAddress.text.toString();
         });
         CheckOut();
-      });
+        print('Latitude=============${latitude}');
+        print('Longitude*************${longitude}');
 
+        print('Current Addresssssss${currentAddress.text}');
+      });
       if (currentAddress.text == "" || currentAddress.text == null) {
       } else {
         setState(() {
-          navigateToPage();
+          // navigateToPage();
         });
       }
     }
@@ -123,11 +184,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     preferences.setString('long2',long2 ?? '0.0');
     preferences.setString('address2',currentAddress.text);
     // var latt = preferences.getString('longitude');
-
     // print('my pickedLat-------------${latt}');
     print('my pickedLong-------------${long2}');
-
-
   }
 
 
@@ -141,25 +199,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}checkoutNow'));
 
     request.fields.addAll({
-      'checkout_latitude': '${lat2}',
-      'checkout_longitude': '${long2}',
+      'checkout_latitude': '${latitude}',
+      'checkout_longitude': '${longitude}',
       'address': '${currentAddress.text}',
       'user_id': '${uids}'
     });
-
+    print("check out parameter${request.fields}===========");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       var Result = await response.stream.bytesToString();
       final finalResult = CheckInOutModel.fromJson(json.decode(Result));
-
       setState(() {
         errorMassage2 = finalResult.data.error;
       });
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
       Fluttertoast.showToast(msg:'${finalResult.data.msg}');
-
     }
     else {
       print(response.reasonPhrase);
@@ -201,15 +257,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   navigateToPage() async {
     Future.delayed(Duration(milliseconds:1200), () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) =>Dashboard()),
-              (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>Dashboard()), (route) => false);
     });
   }
-
-  @override
-
 
   @override
   Widget build(BuildContext context) {

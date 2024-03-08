@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
+import 'package:omega_employee_management/Helper/String.dart';
 import 'dart:ui' as ui;
 import 'package:omega_employee_management/model_all_response/GetfaadbackModel.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,8 +28,8 @@ class _FeedbacksState extends State<Feedbacks> {
   @override
   void initState() {
     super.initState();
-    getfeedBacks();
     myLeadId();
+    getfeedBacks();
   }
 
   myLeadId() async {
@@ -49,9 +50,9 @@ class _FeedbacksState extends State<Feedbacks> {
     };
     var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/get_lead_feedback'));
     request.fields.addAll({
-      'lead_id': '${lead_id}'
+      'user_id': '${CUR_USERID}'
     });
-    print("lead datata in feedbackkkkk ${lead_id}");
+    print("lead datata in feedbackkkkk ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -169,8 +170,6 @@ class _FeedbacksState extends State<Feedbacks> {
                                           SizedBox(height: 10),
                                           Text("Amount:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp)),
                                           SizedBox(height: 10),
-                                          Text("Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp)),
-                                          SizedBox(height: 10),
                                           Text("User Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp)),
                                           SizedBox(height: 10),
                                           Text("Vehicle:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: colors.blackTemp)),
@@ -196,8 +195,6 @@ class _FeedbacksState extends State<Feedbacks> {
                                           Text("${getfeedback?.data?[index].code}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)),
                                           SizedBox(height: 12),
                                           Text("Bkt", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)),
-                                          SizedBox(height: 12),
-                                          Text("${getfeedback?.data?[index].name}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)),
                                           SizedBox(height: 12),
                                           getfeedback?.data?[index].amount == "" || getfeedback?.data?[index].amount == null ? Text("NA", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)):
                                           Text("${getfeedback?.data?[index].amount}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)),

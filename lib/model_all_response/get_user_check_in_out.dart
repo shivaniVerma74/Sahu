@@ -40,8 +40,8 @@ class GetUserCheckInOutModel {
 class Data {
   String? id;
   String? userId;
-  Null? checkinImages;
-  Null? checkoutImages;
+  String? checkinImages;
+  String? checkoutImages;
   String? checkin;
   String? checkout;
   String? date;

@@ -20,7 +20,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Sahu"
         android:usesCleartextTraffic="true">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB7F5pGTk1Yqwj5_ayYsVBcFtVyx29C0MM"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCKLIBoAca5ptn9A_1UCHNNrtzI81w2KRk"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

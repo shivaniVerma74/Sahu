@@ -39,6 +39,7 @@ import '../../Helper/Constant.dart';
 import '../../Provider/Theme.dart';
 import '../../main.dart';
 import '../Faqs.dart';
+import '../FosCollection.dart';
 import '../Manage_Address.dart';
 import '../MyOrder.dart';
 import '../My_Wallet.dart';
@@ -622,13 +623,33 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
             ),
             leading:Icon(Icons.details_outlined,color: colors.primary,),
             dense: true,
-            title: Text('Deatils',
+            title: Text('Details',
               style: TextStyle(
                   color: Theme.of(context).colorScheme.lightBlack, fontSize: 15),
             ),
             onTap: () {
               Navigator.push(context,MaterialPageRoute(builder: (context)=>TodayCheckInOutScreen()));
-
+            },
+          ),
+        ),
+        SizedBox(height:5,),
+        Container(
+          height: 50,
+          color:colors.whiteTemp,
+          width: MediaQuery.of(context).size.width/1,
+          child:ListTile(
+            trailing: Icon(
+              Icons.navigate_next,
+              color: colors.primary,
+            ),
+            leading:Icon(Icons.collections,color: colors.primary,),
+            dense: true,
+            title: Text('FOS Collection',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.lightBlack, fontSize: 15),
+            ),
+            onTap: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> FosCollection()));
             },
           ),
         ),

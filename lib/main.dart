@@ -80,8 +80,7 @@ Future<void> initializedDownload() async {
   await FlutterDownloader.initialize(debug: false);
 }
 
-final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
-    GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatefulWidget {
   late SharedPreferences sharedPreferences;

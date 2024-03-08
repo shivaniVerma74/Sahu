@@ -45,15 +45,15 @@ class _AccountScreenState extends State<AccountScreen> {
     };
     var request = http.MultipartRequest('POST', Uri.parse('https://alphawizzserver.com/sahu/app/v1/api/get_lead_feedback'));
     request.fields.addAll({
-      'lead_id': '${lead_id}'
+      'user_id': '${CUR_USERID}'
     });
-    print("lead datata in feedbackkkkk ${lead_id}");
+    print("lead datata in feedbackkkkk ${request.fields}");
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       var Response = await response.stream.bytesToString();
       final finalResponse = GetfaadbackModel.fromJson(json.decode(Response));
-      print("Aaaaaaaaaaaaaaaaaaaa ${Response}");
+      print("Aaaaaaaaaaa ${Response}");
       setState(() {
         getfeedback = finalResponse;
       });
@@ -189,7 +189,8 @@ class _AccountScreenState extends State<AccountScreen> {
              },),
            ),
          ],
-        ): SizedBox(),
+        ):
+        SizedBox(),
       ),
     );
   }
