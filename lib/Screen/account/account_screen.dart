@@ -71,8 +71,8 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: getfeedback?.data == null || getfeedback?.data?.length == 0 ? Center(child: Text("No Data Found"),):
-        getfeedback?.data?[0].codeType == "ONLINE" || getfeedback?.data?[0].codeType == "online"?
+        child:
+        getfeedback?.data == null || getfeedback?.data?.length == 0 ? Center(child: Text("No Data Found"),):
         Column(
          children: [
            Container(
@@ -83,85 +83,82 @@ class _AccountScreenState extends State<AccountScreen> {
                scrollDirection: Axis.vertical,
                itemCount: getfeedback?.data?.length,
                itemBuilder: (context, index) {
-               return Column(
+               return
+                 getfeedback?.data?[index].codeType == "ONLINE" || getfeedback?.data?[index].codeType == "online"?
+                 Column(
                  children: [
                    SizedBox(height:10),
                    Stack(
                      children: [
-                       InkWell(
-                         onTap: () {
-                           // showDetails(index);
-                         },
-                         child: Padding(
-                           padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10),
-                           child: Card(
-                             elevation: 5,
-                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                             child: Padding(
-                               padding: const EdgeInsets.only(left: 8.0,right: 10,top: 10),
-                               child: Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   SizedBox(height:50,),
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:15.0,right: 15),
-                                     child: Row(
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       children: [
-                                         Text("Bank Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
-                                         Text("${getfeedback?.data?[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                                       ],
-                                     ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10),
+                         child: Card(
+                           elevation: 5,
+                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                           child: Padding(
+                             padding: const EdgeInsets.only(left: 8.0,right: 10,top: 10),
+                             child: Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 SizedBox(height:50,),
+                                 Padding(
+                                   padding: const EdgeInsets.only(left:15.0,right: 15),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
+                                       Text("Bank Name :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
+                                       Text("${getfeedback?.data?[index].bankName}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                     ],
                                    ),
-                                   SizedBox(height: 10),
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:15.0,right: 15),
-                                     child: Row(
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       children: [
-                                         Text("Customer Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
-                                         getfeedback?.data?[index].name == null || getfeedback?.data?[index].name == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),):
-                                         Text("${getfeedback?.data?[index].name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                                       ],
-                                     ),
+                                 ),
+                                 SizedBox(height: 10),
+                                 Padding(
+                                   padding: const EdgeInsets.only(left:15.0,right: 15),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
+                                       Text("Customer Name:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
+                                       getfeedback?.data?[index].name == null || getfeedback?.data?[index].name == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),):
+                                       Text("${getfeedback?.data?[index].name}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                     ],
                                    ),
-                                   SizedBox(height: 10),
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:15.0,right: 15),
-                                     child: Row (
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       children: [
-                                         Text("Code Type :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.fontColor),),
-                                         getfeedback?.data?[index].codeType == null || getfeedback?.data?[index].codeType == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),) :
-                                         Text("${getfeedback?.data?[index].codeType}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                                       ],
-                                     ),
+                                 ),
+                                 SizedBox(height: 10),
+                                 Padding(
+                                   padding: const EdgeInsets.only(left:15.0,right: 15),
+                                   child: Row (
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
+                                       Text("Code Type :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.fontColor),),
+                                       getfeedback?.data?[index].codeType == null || getfeedback?.data?[index].codeType == "" ? Text("NA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),) :
+                                       Text("${getfeedback?.data?[index].codeType}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                     ],
                                    ),
-                                   // SizedBox(height: 10),
-                                   // Padding(
-                                   //   padding: const EdgeInsets.only(left:15.0,right: 15),
-                                   //   child: Row(
-                                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   //     children: [
-                                   //       Text("Received :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
-                                   //       Text("10000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
-                                   //     ],
-                                   //   ),
-                                   // ),
-                                   // SizedBox(height: 10),
-                                   // Padding(
-                                   //   padding: const EdgeInsets.only(left:15.0,right: 15),
-                                   //   child: Row(
-                                   //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   //     children: [
-                                   //       Text("Pending :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
-                                   //       Text("500", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
-                                   //     ],
-                                   //   ),
-                                   // ),
-                                   SizedBox(height: 20),
-                                 ],
-                               ),
+                                 ),
+                                 // SizedBox(height: 10),
+                                 // Padding(
+                                 //   padding: const EdgeInsets.only(left:15.0,right: 15),
+                                 //   child: Row(
+                                 //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 //     children: [
+                                 //       Text("Received :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
+                                 //       Text("10000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp),),
+                                 //     ],
+                                 //   ),
+                                 // ),
+                                 // SizedBox(height: 10),
+                                 // Padding(
+                                 //   padding: const EdgeInsets.only(left:15.0,right: 15),
+                                 //   child: Row(
+                                 //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 //     children: [
+                                 //       Text("Pending :", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.fontColor),),
+                                 //       Text("500", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color:colors.blackTemp)),
+                                 //     ],
+                                 //   ),
+                                 // ),
+                                 SizedBox(height: 20),
+                               ],
                              ),
                            ),
                          ),
@@ -185,12 +182,11 @@ class _AccountScreenState extends State<AccountScreen> {
                      ],
                    ),
                  ],
-               );
+               ): SizedBox();
              },),
            ),
          ],
-        ):
-        SizedBox(),
+        ),
       ),
     );
   }

@@ -120,8 +120,8 @@ class _BankLeadsState extends State<BankLeads> {
                       suffixIcon: Container(
                           width: 20,
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: colors.primary),
-                          child: Icon(
-                              Icons.search, color: Colors.white)),
+                          child: Icon(Icons.search, color: Colors.white),
+                      ),
                       hintText: "Search here",
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
                   ),
@@ -138,14 +138,14 @@ class _BankLeadsState extends State<BankLeads> {
                       Container(
                         height: MediaQuery.of(context).size.height/1.3,
                         child: ListView.builder(
-                            itemCount: leadData.length == null || leadData.length==""?0 : leadData.length,
+                            itemCount: leadData.length,
                             shrinkWrap: true,
                             physics: AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
                                   print("lklkkkl${getLeadData!.data![index].id}");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AllLeadsDetails(model: getLeadData!.data![index])));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AllLeadsDetails(model: leadData[index])));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(left:10.0,right: 10),

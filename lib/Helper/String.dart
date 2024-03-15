@@ -322,13 +322,6 @@ const String BANK_STATUS = 'banktransfer_status';
 
 
 const String UserId = 'user_id';
-
-
-
-
-
-
-
 String ISDARK = "";
 final String PAYPAL_RESPONSE_URL = "$baseUrl" + "app_payment_status";
 final String FLUTTERWAVE_RES_URL = baseUrl + "flutterwave-payment-response";

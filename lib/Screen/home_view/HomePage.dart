@@ -246,6 +246,7 @@ Future<void> getAddress()async {
       if(pinCodeController.text.isNotEmpty){
         setState(() {
           getLeadData = finalResult;
+          print("${finalResult} ${getLeadData?.data?.length} get leads datatat ===========");
           // print('Primary pin is heree--------${getLeadData?.data?.first.primaryAddressPin}');
         });
       }else{
@@ -355,6 +356,7 @@ Future<void> getAddress()async {
   }
 
   String? todayAmount, todayMessage;
+    bool? earningStatus;
   getTodayAmount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? uids = prefs.getString('new_user_id');
@@ -375,7 +377,8 @@ Future<void> getAddress()async {
       final jsonResponse = json.decode(finalResponse);
       todayAmount = jsonResponse['amount'];
       todayMessage = jsonResponse['message'];
-      print("=======today amonunt========${todayAmount} ${todayMessage}===========");
+      earningStatus = jsonResponse['earning_status'];
+      print("=======today amonunt========${todayAmount} ${todayMessage} ${earningStatus}===========");
       setState(() {});
     }
     else {
@@ -759,7 +762,8 @@ Future<void> getAddress()async {
               SizedBox(height:20,),
               Container(
                 height: MediaQuery.of(context).size.height/2.5,
-                child: leadData.length == null || leadData.length == "" ? Center(child: Text("No Leads Avaliable", style: TextStyle(fontSize: 13),)):
+                child: leadData.length == null || leadData.length == "" ? Center(
+                    child: Text("No Leads Available", style: TextStyle(fontSize: 13))):
                 ListView.builder(
                     itemCount: leadData.length == null || leadData.length==""? 0: leadData.length,
                     shrinkWrap: true,
@@ -804,13 +808,13 @@ Future<void> getAddress()async {
                                           SizedBox(height: 12),
                                           Container(
                                              width: 120,
-                                              child: Text("${leadData[index].customername}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),)),
+                                              child: Text("${leadData[index].customername}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp))),
                                           SizedBox(height: 12),
                                           Text("${leadData[index].bomBkt}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                           SizedBox(height: 12),
                                           Text("${leadData[index].caller}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
                                           SizedBox(height: 12),
-                                          Text("${leadData[index].principalOutstanding}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp),),
+                                          Text("${leadData[index].principalOutstanding}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: colors.blackTemp)),
                                           // SizedBox(height: 10,),
                                           // address3!=null ?Text("${getLeadData?.data?[index].primaryAddress}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: colors.blackTemp),):Text('Address not found'),
                                           // SizedBox(height: 10,),
@@ -1929,6 +1933,7 @@ Future<void> getAddress()async {
               ),
             ),
             SizedBox(width:10,),
+            earningStatus == false ? SizedBox() :
             InkWell(
               onTap: (){
                 setState(() {
@@ -1946,12 +1951,11 @@ Future<void> getAddress()async {
                 // width: 120,
                 height: 40,
                 width:70,
-
                 child: Center(
-                  child: Text("Earnings",style: TextStyle(color: _currentIndex == 4 ?colors.whiteTemp:colors.blackTemp)),
+                  child: Text("Earnings",style: TextStyle(color: _currentIndex == 4 ? colors.whiteTemp:colors.blackTemp)),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

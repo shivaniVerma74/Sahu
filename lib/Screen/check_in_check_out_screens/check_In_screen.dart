@@ -333,7 +333,10 @@ class _CheckInScreenState extends State<CheckInScreen> {
       'next_date': '${dateController.text}',
       'remark': '${remarkCtr.text}',
       'occupation': '${ocupationCtr.text}',
-      'amount': '${amountCtr.text}'
+      'amount': '${amountCtr.text}',
+      'checkout_latitude': '${latitude}',
+     'checkout_longitude': '${longitude}',
+     'current_address': '${currentAddress.text}',
     });
     print('-----sednd feedbacks parameteer------${request.fields}');
     imgFile == null ? null : request.files.add(await http.MultipartFile.fromPath(
